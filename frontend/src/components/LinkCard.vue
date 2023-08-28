@@ -14,9 +14,9 @@
         <p class="is-size-7">{{ linkDescription }}</p>
       </div>
     </div>
-    <div class="media-right p-3">
-      <button @click="imgSize" class="delete"></button>
-    </div>
+    <!-- <div class="media-right p-3">
+      <button class="delete"></button>
+    </div> -->
   </article>
 </template>
 
@@ -25,47 +25,45 @@ import axios from 'axios'
 import { RouterLink } from 'vue-router'
 
 export default {
-    props: {
-        link: String
+  props: {
+    link: String
+  },
+  data() {
+    return {
+      linkData: '',
+      loading: true,
+    }
+  },
+  mounted() {
+    this.getMetadata()
+  },
+  computed: {
+    linkDescription() {
+      return this.linkData?.description?.length < 130 ? this.linkData?.description : this.linkData?.description?.substring(0, 130) + '...'
+    }
+  },
+  methods: {
+    getMetadata() {
+      let newLink = 'https://bulma.io/images/placeholders/128x128.png'
+      if (this.link && typeof (this.link) !== 'undefined' && this.link !== null) {
+        newLink = this.link
+      }
+      axios
+        .get(`https://jsonlink.io/api/extract?url=${newLink}`)
+        .then(response => {
+          this.linkData = response.data
+        })
+        .then(() => this.loading = false)
+        .catch(error => console.error('get link data error ', error))
     },
-    data() {
-        return {
-            linkData: '',
-            loading: true,
-        };
-    },
-    mounted() {
-        this.getMetadata();
-    },
-    computed: {
-        linkDescription() {
-            return this.linkData?.description?.length < 130 ? this.linkData?.description : this.linkData?.description?.substring(0, 130) + '...';
-        }
-    },
-    methods: {
-        getMetadata() {
-            let newLink = 'https://bulma.io/images/placeholders/128x128.png';
-            if (this.link && typeof (this.link) !== 'undefined' && this.link !== null) {
-                newLink = this.link;
-            }
-            axios
-                .get(`https://jsonlink.io/api/extract?url=${newLink}`)
-                .then(response => {
-                this.linkData = response.data;
-                console.log(this.linkData);
-            })
-                .then(() => this.loading = false)
-                .then(() => this.imgSize())
-                .catch(error => console.error('get link data error ', error));
-        },
-        imgSize() {
-            let img = document.querySelector("#linkImg");
-            let width = img.naturalWidth;
-            let height = img.naturalHeight;
-            console.log("Original width=" + width + ", " + "Original height=" + height);
-        }
-    },
-    components: { RouterLink }
+    imgSize() {
+      let img = document.querySelector("#linkImg");
+      let width = img.naturalWidth;
+      let height = img.naturalHeight;
+      console.log("Original width=" + width + ", " + "Original height=" + height);
+    }
+  },
+  components: { RouterLink }
 }
 </script>
 

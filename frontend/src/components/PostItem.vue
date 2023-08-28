@@ -53,15 +53,41 @@
       </nav>
     </div>
 
-    <!-- Additional actions -->
+    <!-- Post actions -->
     <div className="media-right">
+      <!-- Go to post detail view -->
       <RouterLink v-if="!showDetail" :to="{name: 'postview', params: {'id': post.id}}">
         <span class="icon"><i class="fas fa-ellipsis-vertical"></i></span>
       </RouterLink>
 
-      <a v-else id="show-modal" @click="showModal = true">
-        <span class="icon"><i class="fas fa-ellipsis-vertical"></i></span>
-      </a>
+      <div v-else>
+        <!-- Report -->
+        <div v-if="userStore.user.id !== user.id">
+          <a id="show-modal" @click="showModal = true">
+            <span class="icon"><i class="fas fa-ellipsis-vertical"></i></span>
+          </a>
+        </div>
+
+        <!-- Additional actions -->
+        <div v-else class="dropdown is-right is-active">
+          <div class="dropdown-trigger">
+            <span class="icon"><i class="fas fa-ellipsis-vertical"></i></span>
+          </div>
+          <div class="dropdown-menu" id="dropdown-menu" role="menu">
+            <div class="dropdown-content">
+              <a class="dropdown-item">
+                Edit Rec
+              </a>
+              <a class="dropdown-item">
+                Add Recipients
+              </a>
+              <a id="show-modal" @click="showModal = true" class="dropdown-item has-text-danger">
+                Delete
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </article>
 
