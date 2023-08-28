@@ -1,0 +1,81 @@
+/* Global styles */
+
+/* Typography */
+a, p, span, label, button { font-family: 'Montserrat', sans-serif; }
+a.button, button { font-weight: 700; }
+
+/* Colors */
+.is-primary-purple {
+  background-color: #50409A;
+}
+.is-primary-bg {
+  background-color: #313866;
+}
+.is-secondary-purple {
+  background-color: #964EC2;
+}
+.is-primary-pink {
+  background-color: #FF7BBF;
+}
+.is-primary-blue {
+  background-color: #1F9CE4;
+}
+.is-secondary-blue {
+  background-color: #88F4FF;
+}
+
+.primary-text-purple {
+  color: #625AD8;
+}
+.secondary-text-purple {
+  color: #7339AB;
+}
+.primary-text-blue {
+  color: #1F9CE4
+}
+.secondary-text-blue {
+  color: #88F4FF
+}
+
+/* Circular images */
+.rounded-img-container-lg {
+  display: inline-block;
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.rounded-img-container-md {
+  display: inline-block;
+  width: 128px;
+  height: 128px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.rounded-img-container-sm {
+  display: inline-block;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.rounded-img-container-xs {
+  display: inline-block;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.rounded-img {
+  width: inherit;
+  height: inherit;
+  border-radius: inherit;
+  
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Sidebar styles */
+.side-panel {
+  width: 250px;
+}
