@@ -95,13 +95,22 @@ def post_create(request):
         for recipient in recipients:
             notification = create_notification(request, 'post_tag', post_id=post.id, recipient_id=recipient)
 
-        print(post)
-        print(form)
         serializer = PostSerializer(post)
 
         return JsonResponse(serializer.data, safe=False)
     else:
         return JsonResponse({'error': 'error creating post'})
+
+
+@api_view(['POST'])
+def post_edit(request, id):
+    post = Post.objects.get(pk=id)
+    body = request.data.get('body')
+
+    post.body = body
+    post.save()
+
+    return JsonResponse({'message': 'post edited'})
 
 
 @api_view(['DELETE'])

@@ -26,10 +26,10 @@ SECRET_KEY = 'django-insecure-ufv^b1+3+rt*#r3ej@s5*ad=e5r#nf%rnchnon#c0liy6nzx(8
 DEBUG = True
 
 # SARAH: change to correct domain later
-ALLOWED_HOSTS = ['api.watchthisshit.io']
+ALLOWED_HOSTS = ['api.therecroom.io']
 
 # SARAH: change to correct domain later
-WEBSITE_URL = 'http://api.watchthisshit.io'
+WEBSITE_URL = 'http://api.therecroom.io'
 
 AUTH_USER_MODEL = 'account.User'
 
@@ -55,12 +55,12 @@ REST_FRAMEWORK = {
 
 # SARAH: change to correct domain later
 CORS_ALLOWED_ORIGINS = [
-    'http://watchthisshit.io'
+    'http://therecroom.io'
 ]
 
 # SARAH: change to correct domain later
 CSRF_TRUSTED_ORIGINS = [
-    'http://watchthisshit.io'
+    'http://therecroom.io'
 ]
 
 INSTALLED_APPS = [

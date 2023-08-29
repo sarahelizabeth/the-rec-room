@@ -8,7 +8,7 @@
       </div>
     </figure>
 
-    <!-- Main recommendation -->
+    <!-- Rec title -->
     <div class="media-content">
       <div class="content">
         <span>
@@ -22,11 +22,33 @@
           </span>
         </span>
         
+        <!-- Genres -->
         <div class="py-1">
           <span :class="mediaClass" class="tag mr-2">{{ post.media_type.name }}</span>
           <span v-for="genre in post.genres" :class="mediaClass" class="tag is-light mr-2">{{ genre.name }}</span>
         </div>
-        <span v-if="showDetail">{{ post.body }}</span>
+
+        <!-- Rec detail -->
+        <div v-if="showDetail">
+          <span v-if="!isEditing">{{ post.body }}</span>
+          <div v-else class="control">
+            <div class="field">
+              <textarea class="textarea" rows="4" v-model="post.body" placeholder="A short description..."></textarea>
+            </div>
+            <div class="field">
+              <div class="buttons is-right">
+                <button @click="editDetail" class="button is-small is-danger is-outlined">Cancel</button>
+                <button @click="saveDetail" class="button is-small is-link is-outlined">
+                  <span class="icon">
+                    <i class="fas fa-floppy-disk"></i>
+                  </span>
+                  <span>Save</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- Link card -->
         <LinkCard v-if="showDetail && post.link" :link="post.link" class="my-4" />
       </div>
@@ -69,13 +91,13 @@
         </div>
 
         <!-- Additional actions -->
-        <div v-else class="dropdown is-right is-active">
-          <div class="dropdown-trigger">
+        <div v-else :class="{'is-active': showDropdown }" class="dropdown is-right">
+          <a @click="showDropdown = !showDropdown" class="dropdown-trigger">
             <span class="icon"><i class="fas fa-ellipsis-vertical"></i></span>
-          </div>
+          </a>
           <div class="dropdown-menu" id="dropdown-menu" role="menu">
             <div class="dropdown-content">
-              <a class="dropdown-item">
+              <a @click="editDetail" class="dropdown-item">
                 Edit Rec
               </a>
               <a class="dropdown-item">
@@ -140,6 +162,8 @@ export default {
   data() {
     return {
       isLiked: false,
+      showDropdown: false,
+      isEditing: false,
       showModal: false,
     }
   },
@@ -166,26 +190,6 @@ export default {
         'is-primary': mediaClass == 'is-primary',
         'is-danger': mediaClass == 'is-danger',
         'is-warning': mediaClass == 'is-warning',
-      }
-    },
-    genreClass() {
-      const mediaName = this.post.media_type.name
-
-      if (mediaName == 'Television') {
-        genreClass = 'is-info'
-      } else if (mediaName == 'Film') {
-        genreClass = 'is-primary'
-      } else if (mediaName == 'Book') {
-        genreClass = 'is-warning'
-      } else if (mediaName == 'Music') {
-        genreClass = 'is-danger'
-      }
-
-      return {
-        'is-info': genreClass == 'is-info',
-        'is-primary': genreClass == 'is-primary',
-        'is-danger': genreClass == 'is-danger',
-        'is-warning': genreClass == 'is-warning',
       }
     },
   },
@@ -231,6 +235,23 @@ export default {
         })
         .catch(error => {
           console.error('like POST error ', error)
+        })
+    },
+    editDetail() {
+      this.isEditing = !this.isEditing
+      this.showDropdown = false
+    },
+    saveDetail() {
+      axios
+        .post(`/api/posts/${this.post.id}/edit/`, {
+          'body': this.post.body
+        })
+        .then(response => {
+          this.isEditing = false
+        })
+        .catch(error => {
+          console.error('save detail post error ', error)
+          this.isEditing = false
         })
     },
     deletePost() {
