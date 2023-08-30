@@ -36,7 +36,7 @@
 
         <div class="navbar-item">
           <RouterLink id="navLink" :to="{ 'name': 'notifications' }">
-            Notifications
+            Notifications ({{ userStore.user.notifications }})
           </RouterLink>
         </div>
       </div>

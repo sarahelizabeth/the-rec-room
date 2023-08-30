@@ -11,7 +11,7 @@ from .serializers import ChatSerializer, ChatDetailSerializer, ChatMessageSerial
 
 @api_view(['GET'])
 def chat_list(request):
-    chats = Chat.objects.filter(users__in=list([request.user]))
+    chats = Chat.objects.filter(users__in=list([request.user])).order_by('-modified_at')
     serializer = ChatSerializer(chats, many=True)
 
     return JsonResponse(serializer.data, safe=False)

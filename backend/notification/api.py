@@ -22,7 +22,7 @@ def notifications(request):
 def read_notification(request, id):
   status = request.data.get('status')
   message = 'notification read'
-  notification = Notification.objects.filter(created_for=request.user).get(pk=id)
+  notification = Notification.objects.get(pk=id)
   
   if status == 'is_read':
     notification.is_read = False
@@ -33,3 +33,13 @@ def read_notification(request, id):
   notification.save()
 
   return JsonResponse({'message': message})
+
+@api_view(['POST'])
+def read_all_notifications(request):
+  new_notifications = request.user.received_notifications.filter(is_read=False)
+
+  for notification in new_notifications:
+    notification.is_read = True
+    notification.save()
+
+  return JsonResponse({'message': 'mark all notifications read'})

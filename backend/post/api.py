@@ -16,7 +16,6 @@ def post_list(request):
     posts = Post.objects.all()
     trend = request.GET.get('trend', '')
     media_type = request.GET.get('mediaType', '')
-    print(media_type)
 
     if trend:
         posts = posts.filter(body__icontains='#'+trend)
@@ -47,6 +46,7 @@ def post_list_profile(request, id):
 
     user_serializer = UserSerializer(user)
     posts_serializer = PostSerializer(posts, many=True)
+
     return JsonResponse({
         'user': user_serializer.data,
         'posts': posts_serializer.data
@@ -60,6 +60,7 @@ def post_list_profile_received(request, id):
 
     user_serializer = UserSerializer(user)
     posts_serializer = PostSerializer(posts, many=True)
+
     return JsonResponse({
         'user': user_serializer.data,
         'posts': posts_serializer.data
@@ -116,7 +117,6 @@ def post_edit(request, id):
 @api_view(['DELETE'])
 def post_delete(request, id):
     post = Post.objects.get(pk=id)
-
     post.delete()
 
     return JsonResponse({'message': 'post deleted'})
@@ -184,14 +184,13 @@ def post_like(request, id):
 @api_view(['POST'])
 def post_create_comment(request, id):
     comment = Comment.objects.create(body=request.data.get('body'), created_by=request.user)
-
     post = Post.objects.get(pk=id)
+    
     post.comments.add(comment)
     post.comments_count = post.comments_count + 1
     post.save()
 
     notification = create_notification(request, 'post_comment', post_id=post.id)
-
     serializer = CommentSerializer(comment)
 
     return JsonResponse(serializer.data, safe=False)

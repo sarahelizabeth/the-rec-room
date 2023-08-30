@@ -79,7 +79,7 @@ export default {
 
       if (!isEmailValid) return
 
-      if (this.errors.length === 0) {
+      // if (this.errors.length === 0) {
       await axios
         .post('/api/login/', this.form)
         .then(response => {
@@ -90,18 +90,19 @@ export default {
           console.error('login POST error ', error)
           this.errors.push('The email or password is incorrect, or the user has not been activated.')
         })
-      }
-      if (this.errors.length === 0) {
+      // }
+      // if (this.errors.length === 0) {
       await axios
         .get('/api/me/')
         .then(response => {
             this.userStore.setUserInfo(response.data)
+            this.userStore.setUserNotifications()
             this.$router.push('/feed')
         })
         .catch(error => {
             console.error('login GET error', error)
         })
-      }
+      // }
     },
     validateEmail(value) {
       // if (!value || value == '') {

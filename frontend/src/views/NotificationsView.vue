@@ -4,7 +4,10 @@
 
       <!-- New notifications -->
       <div v-if="notifications.length">
-        <p class="is-size-4 has-text-weight-bold has-text-grey pb-4 pt-2">New Notifications</p>
+        <div class="is-flex is-justify-content-space-between is-align-items-baseline pb-4 pt-2">
+          <span class="is-size-4 has-text-weight-bold has-text-grey">New Notifications</span>
+          <a @click="readAllNotifications" class="is-underlined">Mark All Read</a>
+        </div>
         <article v-for="notification in notifications" :key="notification.id" class="media box">
           <figure class="media-left">
             <RouterLink :to="{name: 'profile', params:{'id': notification.created_by.id}}">
@@ -78,9 +81,16 @@
 
 <script>
 import axios from 'axios'
+import { useUserStore } from '@/stores/user'
 
 export default {
   name: 'notifications',
+  setup() {
+    const userStore = useUserStore()
+    return {
+      userStore
+    }
+  },
   data() {
     return {
       notifications: [],
@@ -115,7 +125,8 @@ export default {
     async viewNotification(notification) {
       axios
         .post(`/api/notifications/read/${notification.id}/`)
-        .then(response => {
+        .then(() => {
+          this.userStore.setUserNotifications()
           if (notification.type_of_notification == 'new_follow') {
             this.$router.push({name: 'profile', params: {id: notification.created_by.id}})
           } else if (notification.type_of_notification == 'new_chat') {
@@ -133,14 +144,26 @@ export default {
         .post(`/api/notifications/read/${notification.id}/`, {
           'status': notification.is_read ? 'is_read' : ''
         })
-        .then(response => {
+        .then(() => {
+          this.userStore.setUserNotifications()
           this.notifications.unshift(notification)
           this.watchNotification += 1
         })
         .catch(error => {
           console.error('read notification error ', error)
         })
-    }
+    },
+    readAllNotifications() {
+      axios
+        .post(`/api/notifications/readall/`)
+        .then(() => {
+          this.userStore.setUserNotifications()
+          this.watchNotification += 1
+        })
+        .catch(error => {
+          console.error('mark all as read error ', error)
+        })
+    },
   },
 }
 </script>

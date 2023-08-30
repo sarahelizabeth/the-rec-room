@@ -14,6 +14,7 @@ export const useUserStore = defineStore('user', () => {
     avatar: null,
     access: null,
     refresh: null,
+    notifications: null,
   })
 
   function initStore() {
@@ -27,6 +28,7 @@ export const useUserStore = defineStore('user', () => {
       this.user.username = localStorage.getItem('user.username')
       this.user.email = localStorage.getItem('user.email')
       this.user.avatar = localStorage.getItem('user.avatar')
+      this.user.notifications = localStorage.getItem('user.notifications')
       this.user.isAuthenticated = true
 
       this.refreshToken()
@@ -59,6 +61,7 @@ export const useUserStore = defineStore('user', () => {
     this.user.username = null
     this.user.email = null
     this.user.avatar = null
+    this.user.notifications = null
 
     localStorage.setItem('user.access', '')
     localStorage.setItem('user.refresh', '')
@@ -67,6 +70,7 @@ export const useUserStore = defineStore('user', () => {
     localStorage.setItem('user.username', '')
     localStorage.setItem('user.email', '')
     localStorage.setItem('user.avatar', '')
+    localStorage.setItem('user.notifications', '')
   }
 
   function setUserInfo(user) {
@@ -83,8 +87,18 @@ export const useUserStore = defineStore('user', () => {
     localStorage.setItem('user.name', this.user.name)
     localStorage.setItem('user.email', this.user.email)
     localStorage.setItem('user.avatar', this.user.avatar)
+  }
 
-    console.log('User', this.user)
+  function setUserNotifications() {
+    axios
+      .get('/api/notifications/')
+      .then(response => {
+        this.user.notifications = response.data.newNotifications.length
+        localStorage.setItem('user.notifications', this.user.notifications)
+      })
+      .catch(error => {
+        console.error('notification GET error ', error)
+      })
   }
 
   function refreshToken() {
@@ -98,8 +112,8 @@ export const useUserStore = defineStore('user', () => {
 
       axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.access
     })
-    .catch(error =>{
-      console.log('refresh token ',error)
+    .catch(error => {
+      console.error('refresh token ',error)
 
       this.removeToken()
     })
@@ -111,6 +125,7 @@ export const useUserStore = defineStore('user', () => {
     setToken, 
     removeToken, 
     setUserInfo, 
+    setUserNotifications,
     refreshToken, 
   }
 })
