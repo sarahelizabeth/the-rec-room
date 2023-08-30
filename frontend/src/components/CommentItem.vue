@@ -3,7 +3,7 @@
   <article class="media pl-5">
     <!-- User avatar -->
     <figure class="media-left">
-      <p class="image rounded-img-container-sm">
+      <p class="rounded-img-container-sm">
         <img class="rounded-img" :src="comment.created_by.get_avatar">
       </p>
     </figure>

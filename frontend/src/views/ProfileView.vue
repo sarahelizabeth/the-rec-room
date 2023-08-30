@@ -44,20 +44,20 @@
                 <span>Edit</span>
               </RouterLink>
               <footer class="card-footer">
-                <p class="card-footer-item">
+                <a @click="setFollowType('followed_by')" class="card-footer-item">
                   <span v-if="followed_by.length === 1">1 followers</span>
                   <span v-else>{{ followed_by.length }} followers</span>
-                </p>
-                <p class="card-footer-item">
+                </a>
+                <a @click="setFollowType('follows')" class="card-footer-item">
                   <span>{{ follows.length }} following</span>
-                </p>
+                </a>
               </footer>
             </div>
           </div>
         </div>
       </div>
       <!-- Follows panel -->
-      <Follows />
+      <Follows :type="followType" :initialSet="initialFollowSet" :filteredSet="followSet" @filterSet="filterFollowSet" />
     </div>
 
     <!-- Middle feed -->
@@ -113,6 +113,9 @@ export default {
       isFollowing: false,
       follows: [],
       followed_by: [],
+      followType: 'followed_by',
+      followSet: [],
+      initialFollowSet: [],
     }
   },
   mounted() {
@@ -126,7 +129,14 @@ export default {
       },
       deep: true,
       immediate: true
-    }
+    },
+    'isFollowing': {
+      handler: function() {
+        this.getFollows()
+      },
+      deep: true,
+      immediate: true,
+    },
   },
   methods: {
     getFeed() {
@@ -160,11 +170,27 @@ export default {
 
           this.follows = profile.follows
           this.followed_by = profile.followed_by
+          this.initialFollowSet = profile.followed_by
+          this.followSet = profile.followed_by
           this.isFollowing = user.follows.some(el => el.id === profile.id)
         })
         .catch(error => {
           console.error('get follows error ', error)
         })
+    },
+    filterFollowSet(filtered) {
+      this.followSet = filtered
+    },
+    setFollowType(type) {
+      this.followType = type
+
+      if (this.followType == 'follows') {
+        this.initialFollowSet = this.follows
+        this.followSet = this.follows
+      } else {
+        this.initialFollowSet = this.followed_by
+        this.followSet = this.followed_by
+      }
     },
     startChat() {
       axios

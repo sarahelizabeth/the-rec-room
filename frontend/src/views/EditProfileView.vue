@@ -61,7 +61,7 @@
             <label class="label">Email</label>
             <div class="control has-icons-left has-icons-right">
               <!-- Add class binding for "is-success" and/or "is-danger" -->
-              <input v-model="form.email" class="input" type="email" placeholder="A valid email...">
+              <input disabled v-model="form.email" class="input" type="email" placeholder="A valid email...">
               <span class="icon is-small is-left">
                 <i class="fas fa-envelope"></i>
               </span>

@@ -37,7 +37,7 @@
             </div>
             <div class="field">
               <div class="buttons is-right">
-                <button @click="editDetail" class="button is-small is-danger is-outlined">Cancel</button>
+                <button @click="toggleEdit" class="button is-small is-danger is-outlined">Cancel</button>
                 <button @click="saveDetail" class="button is-small is-link is-outlined">
                   <span class="icon">
                     <i class="fas fa-floppy-disk"></i>
@@ -97,7 +97,7 @@
           </a>
           <div class="dropdown-menu" id="dropdown-menu" role="menu">
             <div class="dropdown-content">
-              <a @click="editDetail" class="dropdown-item">
+              <a @click="toggleEdit" class="dropdown-item">
                 Edit Rec
               </a>
               <a class="dropdown-item">
@@ -207,10 +207,8 @@ export default {
       axios
         .get(`/api/posts/${this.post.id}/like/`)
         .then(response => {
-          const data = response.data
-
-          if (data.likes.length > 0) {
-            const user_like = data.likes.some(i => {
+          if (response.data.likes.length > 0) {
+            const user_like = response.data.likes.some(i => {
               return i.created_by.id === this.userStore.user.id}
             )
             this.isLiked = user_like
@@ -237,7 +235,7 @@ export default {
           console.error('like POST error ', error)
         })
     },
-    editDetail() {
+    toggleEdit() {
       this.isEditing = !this.isEditing
       this.showDropdown = false
     },

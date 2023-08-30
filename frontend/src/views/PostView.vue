@@ -79,7 +79,6 @@ export default {
         .then(response => {
           this.post = response.data.post
           this.user = response.data.user
-          console.log(response.data.post)
         })
         .catch(error => {
           console.error('post detail error', error)
@@ -100,11 +99,9 @@ export default {
         })
     },
     deleteComment(id) {
-      console.log('delete id ', id)
       axios
         .delete(`/api/posts/${this.$route.params.id}/comment/${id}/delete/`)
         .then(response => {
-          console.log('delete ', response.data)
           // this.showModal = false
           this.getPost()
         })
