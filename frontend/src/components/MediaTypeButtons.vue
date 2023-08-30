@@ -1,5 +1,5 @@
 <template>
-  <div class="field has-addons">
+  <div id="mediaButtons" class="field has-addons">
     <div class="control">
       <button @click="selectType(-1)" :class="selectedId == -1 ? 'is-primary-purple has-text-white is-selected' : ''" class="button">
         <span class="icon is-small">
@@ -62,3 +62,12 @@ export default {
   },
 }
 </script>
+
+<style>
+#mediaButtons {
+  box-shadow: 0 0.5em 1em -0.125em rgba(10,10,10,.1),
+    0 0 0 1px rgba(10,10,10,.02);
+  /* Put this in a media query when styling for mobile */
+  width: 495px; 
+}
+</style>

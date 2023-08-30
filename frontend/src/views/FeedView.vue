@@ -8,7 +8,7 @@
       </div>
 
       <!-- Media type filter -->
-      <div class="my-3">
+      <div class="my-4">
         <MediaTypeButtons @filterMedia="filterPosts" />
       </div>
 
