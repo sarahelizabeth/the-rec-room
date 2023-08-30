@@ -1,16 +1,17 @@
 <template>
   <div class="columns">
-    <!-- List of chats -->
-    <div class="column is-one-third">
+    <!-- Chat List Panel -->
+    <div class="column is-narrow">
       <article class="panel">
         <p class="panel-heading">
           Your Chats
         </p>
-        <div v-for="chat in chats"
+        <a v-for="chat in chats"
             :key="chat.id"
-            v-on:click="setActiveChat(chat.id)"
-            class="is-clickable">
-          <article class="p-3 level is-full-width">
+            @click="setActiveChat(chat.id)"
+            class="panel-block"
+            :class="activeChat.id == chat.id ? 'is-active has-background-link-light' : ''">
+          <article class="level is-full-width">
             <div class="level-left">
               <div class="level-item">
                 <span class="panel-icon">
@@ -21,13 +22,13 @@
                 </template>
               </div>
             </div>
-            <div class="level-right">
+            <!-- <div class="level-right">
               <div class="level-item">
                 <span><small>{{ chat.modified_at_formatted }} ago</small></span>
               </div>
-            </div>
+            </div> -->
           </article>
-        </div>
+        </a>
       </article>
     </div>
 
@@ -145,7 +146,7 @@ export default {
   data() {
     return {
       chats: [],
-      activeChat: {},
+      activeChat: '',
       body: '',
     }
   },

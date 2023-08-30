@@ -3,9 +3,8 @@
     <div class="control">
       <button @click="selectType(-1)" :class="selectedId == -1 ? 'is-primary-purple has-text-white is-selected' : ''" class="button">
         <span class="icon is-small">
-          <i class="fas fa-layer-group"></i>
-          <!-- <i class="fas fa-list"></i> -->
-          <!-- <i class="fas fa-house"></i> -->
+          <!-- <i class="fas fa-layer-group"></i> -->
+          <i class="fas fa-list"></i>
         </span>
         <span>All</span>
       </button>
