@@ -70,7 +70,6 @@
     <div class="column is-one-third">
       <!-- Figure out how to pass in user as the prop for search view -->
       <!-- <Follows /> -->
-      <!-- Replace with "followed by" -->
       <Trends />
     </div>
   </div>

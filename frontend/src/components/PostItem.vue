@@ -18,7 +18,11 @@
           recommended 
           <strong>{{ post.title }}</strong>
           <span v-if="post.recipients?.length > 0">
-            to <strong>{{ post.recipients.map(e => e.name).join(', ')}}</strong>
+            <!-- to <strong>{{ post.recipients.map(e => e.name).join(', ')}}</strong> -->
+            to <strong v-for="(recipient, index) in post.recipients">
+              <RouterLink :to="{name: 'profile', params:{'id': recipient.id}}">{{ recipient.name }}</RouterLink>
+              <span v-if="index < post.recipients.length - 1">, </span>
+            </strong>
           </span>
         </span>
         
