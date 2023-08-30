@@ -1,12 +1,18 @@
 <template>
-  <!-- Create post container -->
   <div class="card box">
-    <form method="POST" v-on:submit.prevent="submitForm">
-      <div class="card-content pt-2">
-        <div class="pb-4">
-          <p class="is-size-4 has-text-weight-bold">Create Recommendation</p>
-        </div>
+    <div @click="handleShowForm" class="px-4 ml-2">
+      <a class="is-size-4 has-text-weight-bold">
+        <span>Create Recommendation</span>
+        <span :style="{transform: `rotate(${deg}deg)`}" class="transition icon is-large">
+          <i class="fas fa-plus"></i>
+        </span>
+      </a>
+    </div>
 
+    <!-- Create post form -->
+    <form v-if="showForm" method="POST" v-on:submit.prevent="submitForm">
+      <div class="card-content pt-2">
+        
         <!-- Media type field -->
         <div class="field">
           <div class="control">
@@ -41,7 +47,7 @@
               placeholder="Choose genres..." 
               track-by="id" 
               v-model="genres"
-              max=7
+              :max="maxGenres"
               :options="genreOptions" 
               :clear-on-select="true" 
               :close-on-select="true"
@@ -120,6 +126,7 @@ export  default {
   },
   data() {
     return {
+      showForm: false,
       media_type: '',
       title: '',
       body: '',
@@ -131,9 +138,11 @@ export  default {
       mediaTypes: [],
       genreDisabled: true,
       genreOptions: [],
+      maxGenres: 7,
       genresLoading: false,
       users: [],
       usersLoading: true,
+      deg: 0,
     }
   },
   mounted() {
@@ -184,6 +193,10 @@ export  default {
           console.error('get genres error ', error)
         })
     },
+    handleShowForm() {
+      this.deg += 45
+      this.showForm = !this.showForm
+    },
     handleBlur() {
       if (this.validLink) this.isLinkValid = true
       else this.isLinkValid = false
@@ -225,6 +238,7 @@ export  default {
           this.genres = ''
           
           this.genreDisabled = true
+          this.showForm = false
         })
         .catch(error => {
           console.error('post form error ', error)
@@ -233,3 +247,9 @@ export  default {
   },
 }
 </script>
+
+<style>
+.transition {
+  transition: transform 0.3s ease-out;
+}
+</style>

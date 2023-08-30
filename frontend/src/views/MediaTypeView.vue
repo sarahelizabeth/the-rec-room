@@ -22,7 +22,6 @@
 
 <script>
 import axios from 'axios'
-import Follows from '../components/Follows.vue'
 import Trends from '../components/Trends.vue'
 import MediaTypes from '../components/MediaTypes.vue'
 import PostItem from '../components/PostItem.vue'
@@ -31,16 +30,9 @@ import { useUserStore } from '@/stores/user'
 export default {
   name: 'MediaTypeView',
   components: {
-    Follows,
     Trends,
     MediaTypes,
     PostItem,
-  },
-  props: {
-    media: {
-      type: String,
-      default: 'test',
-    }
   },
   setup() {
     const userStore = useUserStore()

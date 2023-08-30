@@ -7,6 +7,11 @@
         <CreatePost :user="null" :posts="posts" />
       </div>
 
+      <!-- Media type filter -->
+      <div class="my-3">
+        <MediaTypeButtons @filterMedia="filterPosts" />
+      </div>
+
       <!-- All posts -->
       <div v-for="post in posts" :key="post.id" class="block">
         <PostItem :post="post" :showDetail="false" />
@@ -15,7 +20,7 @@
 
     <!-- Right side tags and navigation -->
     <div class="column is-narrow">
-      <MediaTypes />
+      <!-- <MediaTypes /> -->
       <Trends />
     </div>
   </div>
@@ -27,7 +32,7 @@ import CreatePost from '../components/CreatePost.vue'
 import Follows from '../components/Follows.vue'
 import Trends from '../components/Trends.vue'
 import PostItem from '../components/PostItem.vue'
-import MediaTypes from '../components/MediaTypes.vue'
+import MediaTypeButtons from '../components/MediaTypeButtons.vue'
 import { useUserStore } from '@/stores/user'
 
 export default {
@@ -37,7 +42,7 @@ export default {
     Follows,
     Trends,
     PostItem,
-    MediaTypes,
+    MediaTypeButtons,
   },
   setup() {
     const userStore = useUserStore()
@@ -64,6 +69,21 @@ export default {
           console.error('get feed error ', error)
         })
     },
+    filterPosts(id) {
+      if (id == -1) {
+        this.getFeed()
+        return
+      }
+      
+      axios
+        .get(`/api/posts/?mediaType=${id}`)
+        .then(response => {
+          this.posts = response.data
+        })
+        .catch(error => {
+          console.error('feed error ', error)
+        })
+    }
   }
 }
 </script>
