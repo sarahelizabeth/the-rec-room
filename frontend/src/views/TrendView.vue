@@ -2,8 +2,8 @@
   <div class="columns">
     <!-- Trend feed container -->
     <div class="column is-two-thirds">
-      <div class="box p-3" style="border: 2px solid hsl(171, 100%, 41%);">
-        <p class="is-size-4 has-text-weight-bold has-text-primary">#{{ $route.params.id }}</p>
+      <div class="box p-3">
+        <p class="is-size-4 has-text-weight-bold primary-text-purple">#{{ $route.params.id }}</p>
       </div>
 
       <!-- All posts -->
@@ -14,7 +14,7 @@
 
     <!-- Right side tags and navigation -->
     <div class="column is-one-third">
-      <MediaTypes />
+      <!-- <MediaTypes /> -->
       <Trends />
     </div>
   </div>

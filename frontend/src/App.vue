@@ -3,7 +3,13 @@
     <div class="navbar-brand">
       <div class="navbar-item">
         <RouterLink :to="{ 'name': 'home' }">
-          <h1 class="title is-1" id="main-title">The Rec Room</h1>
+          <h1 class="title is-1 ml-5" id="main-title">
+            <!-- The Rec Room -->
+            <span class="icon is-large has-text-white mr-1">
+              <i class="fas fa-icons"></i>
+            </span>
+            The Rec Room
+          </h1>
         </RouterLink>
       </div>
 

@@ -31,7 +31,13 @@ WEBSITE_URL = 'http://127.0.0.1:8000'
 
 AUTH_USER_MODEL = 'account.User'
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# Email configuration
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'therecroom.development@gmail.com'
+EMAIL_HOST_PASSWORD = 'gbqsupzrnzyuulfq' # Note that this should be the App password rather than your Google account password
+EMAIL_PORT = 465
+EMAIL_USE_SSL = True
 
 
 # Application definition
@@ -94,7 +100,7 @@ ROOT_URLCONF = 'backend.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

@@ -9,8 +9,8 @@
         <p class="mt-3">
           If you're reading this, that means Sarah has roped you into testing her <s>stupid</s>
           awesome app! Once you've created an account, you will join the tens of other users of
-          <strong class="primary-text-purple has-text-weight-bold">WATCH THIS SHIT</strong>: a
-          movie, TV, and book recommendation app for people who don't suck.
+          <strong class="primary-text-purple has-text-weight-bold">The Rec Room</strong>: a
+          movie, TV, music, and book recommendation app for people who don't suck.
         </p>
         <p>
           Once you've given me all of your personal information—including, but not limited to,

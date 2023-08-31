@@ -3,14 +3,14 @@
     <div @click="handleShowForm" class="px-4 ml-2">
       <a class="is-size-4 has-text-weight-bold">
         <span>Create Recommendation</span>
-        <span :style="{transform: `rotate(${deg}deg)`}" class="transition icon is-large">
+        <span :style="{transform: `rotate(${deg}deg)`}" class="rotation icon is-large">
           <i class="fas fa-plus"></i>
         </span>
       </a>
     </div>
 
     <!-- Create post form -->
-    <form v-if="showForm" method="POST" v-on:submit.prevent="submitForm">
+    <form :class="showForm ? 'showing' : 'hidden'" method="POST" @submit.prevent="submitForm">
       <div class="card-content pt-2">
         
         <!-- Media type field -->
@@ -249,7 +249,18 @@ export  default {
 </script>
 
 <style>
-.transition {
+.rotation {
   transition: transform 0.3s ease-out;
+}
+
+.hidden {
+  transition: height 0.5s ease 0.3s, opacity 0.3s ease-in;
+  height: 0px;
+  opacity: 0;
+}
+.showing {
+  transition: height 0.5s ease, opacity 0.3s ease-in 0.35s;
+  height: 370px;
+  opacity: 1;
 }
 </style>
