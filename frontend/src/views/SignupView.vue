@@ -13,15 +13,15 @@
           movie, TV, music, and book recommendation app for people who don't suck.
         </p>
         <p>
-          Once you've given me all of your personal information—including, but not limited to,
-          your name, email address, social security number, blood type, and password—you will 
-          be able to create trends, chat with other hoopy froods, and—of course—pester your friends 
-          and loved ones with recommendations for all your favorite <s>dumb bullshit</s> media.
+          Once you've given me all of your personal information (including, but not limited to,
+          your name, email address, social security number, blood type, and password), you will 
+          be able to create trends, chat with other users, and—of course—pester your friends 
+          and loved ones with recs for all your favorite <s>dumb bullshit</s> media.
         </p>
-        <p>
+        <!-- <p>
           And, of course, <span class="has-text-weight-semibold primary-text-purple">
             don't forget to bring a towel!</span>
-        </p>
+        </p> -->
       </div>
     </div>
 

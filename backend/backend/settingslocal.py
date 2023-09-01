@@ -25,15 +25,19 @@ SECRET_KEY = 'django-insecure-ufv^b1+3+rt*#r3ej@s5*ad=e5r#nf%rnchnon#c0liy6nzx(8
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# SARAH: change to correct domain later
-ALLOWED_HOSTS = ['api.therecroom.io']
+ALLOWED_HOSTS = []
 
-# SARAH: change to correct domain later
-WEBSITE_URL = 'http://api.therecroom.io'
+WEBSITE_URL = 'http://127.0.0.1:8000'
 
 AUTH_USER_MODEL = 'account.User'
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# Email configuration
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'therecroom.development@gmail.com'
+EMAIL_HOST_PASSWORD = 'gbqsupzrnzyuulfq' # Note that this should be the App password rather than your Google account password
+EMAIL_PORT = 465
+EMAIL_USE_SSL = True
 
 
 # Application definition
@@ -53,14 +57,14 @@ REST_FRAMEWORK = {
     )
 }
 
-# SARAH: change to correct domain later
 CORS_ALLOWED_ORIGINS = [
-    'http://therecroom.io'
+    'http://127.0.0.1:5173',
+    'http://localhost:5173',
 ]
 
-# SARAH: change to correct domain later
 CSRF_TRUSTED_ORIGINS = [
-    'http://therecroom.io'
+    'http://127.0.0.1:5173',
+    'http://localhost:5173',
 ]
 
 INSTALLED_APPS = [
@@ -96,7 +100,7 @@ ROOT_URLCONF = 'backend.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -115,15 +119,10 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# SARAH: change to correct backend later
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'rec_room',
-        'USER': 'rec_room_admin',
-        'PASSWORD': 'rradmin123',
-        'HOST': 'localhost',
-        'PORT': ''
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 

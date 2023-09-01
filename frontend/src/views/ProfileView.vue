@@ -66,8 +66,8 @@
       <!-- View filters -->
       <div v-if="userStore.user.id === user.id" class="control mb-3">
         <div class="buttons">
-          <button @click="getFeed" class="button">My Recommendations</button>
-          <button @click="getReceivedFeed" class="button">Recommended to me</button>
+          <button @click="getFeed" class="button">Sent Recs</button>
+          <button @click="getReceivedFeed" class="button">Received Recs</button>
         </div>
       </div>
 

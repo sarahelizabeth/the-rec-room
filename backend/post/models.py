@@ -24,6 +24,12 @@ class Comment(models.Model):
         return "Comment by {} on {}".format(self.created_by, self.created_at)
 
 
+class Save(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    created_by = models.ForeignKey(User, related_name='saves', null=True, on_delete=models.SET_NULL)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+
 class PostAttachment(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     image = models.ImageField(upload_to='post_attachments')
@@ -79,6 +85,9 @@ class Post(models.Model):
 
     comments = models.ManyToManyField(Comment, blank=True)
     comments_count = models.IntegerField(default=0)
+
+    saves = models.ManyToManyField(Save, blank=True)
+    saves_count = models.IntegerField(default=0)
 
     class Meta:
         ordering = ('-created_at',)

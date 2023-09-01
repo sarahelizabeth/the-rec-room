@@ -4,7 +4,7 @@ from rest_framework.decorators import api_view, authentication_classes, permissi
 import requests
 
 from .serializers import PostSerializer, LikeSerializer, PostDetailSerializer, CommentSerializer, TrendSerializer, MediaTypeSerializer, GenreSerializer
-from .models import Post, Like, Comment, Report, Trend, MediaType
+from .models import Post, Like, Comment, Save, Report, Trend, MediaType
 from .forms import PostForm
 
 from account.models import User
@@ -178,6 +178,48 @@ def post_like(request, id):
             return JsonResponse({
                 'message': message,
                 'post_like': serializer.data,
+            }, safe=False)
+
+
+@api_view(['GET', 'POST'])
+def post_save(request, id):
+    post = Post.objects.get(pk=id)
+
+    if request.method == 'GET':
+        serializer = PostSerializer(post)
+        return JsonResponse(serializer.data, safe=False)
+
+    if request.method == 'POST':
+        message = 'post saved'
+        if not post.saves.filter(created_by=request.user):
+            save = Save.objects.create(created_by=request.user)
+        
+            post.saves_count += 1
+            post.saves.add(save)
+            post.save()
+
+            serializer = PostSerializer(post)
+
+            notification = create_notification(request, 'post_save', post_id=post.id)
+
+            return JsonResponse({
+                'message': message,
+                'post_save': serializer.data,
+            }, safe=False)
+        else:
+            save = post.saves.get(created_by=request.user)
+
+            post.saves_count -= 1
+            post.saves.remove(save)
+            post.save()
+            save.delete()
+
+            message = 'post unsaved'
+            serializer = PostSerializer(post)
+
+            return JsonResponse({
+                'message': message,
+                'post_save': serializer.data,
             }, safe=False)
 
 

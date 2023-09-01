@@ -1,4 +1,4 @@
-from .models import Post, Comment, Like, Trend, MediaType, Genre
+from .models import Post, Comment, Like, Save, Trend, MediaType, Genre
 from account.serializers import UserSerializer
 from rest_framework import serializers
 
@@ -7,6 +7,13 @@ class LikeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Like 
+        fields = ('id', 'created_by',)
+
+class SaveSerializer(serializers.ModelSerializer):
+    created_by = UserSerializer(read_only=True)
+
+    class Meta:
+        model = Save 
         fields = ('id', 'created_by',)
 
 class GenreSerializer(serializers.ModelSerializer):
@@ -25,11 +32,12 @@ class PostSerializer(serializers.ModelSerializer):
     genres = GenreSerializer(read_only=True, many=True)
     created_at = serializers.DateTimeField(format='%b %d, %Y %I:%M%p')
     likes = LikeSerializer(read_only=True, many=True)
+    saves = SaveSerializer(read_only=True, many=True)
     media_type = MediaTypeSerializer(read_only=True)
 
     class Meta:
         model = Post
-        fields = ('id', 'body', 'likes', 'likes_count', 'comments_count', 'created_by', 'created_at', 'created_at_formatted', 'media_type', 'recipients', 'genres', 'title', 'link',)
+        fields = ('id', 'body', 'likes', 'likes_count', 'saves', 'saves_count', 'comments_count', 'created_by', 'created_at', 'created_at_formatted', 'media_type', 'recipients', 'genres', 'title', 'link',)
 
 class CommentSerializer(serializers.ModelSerializer):
     created_by = UserSerializer(read_only=True)
@@ -49,7 +57,7 @@ class PostDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ('id', 'body', 'likes_count', 'comments_count', 'created_by', 'created_at', 'comments', 'media_type', 'recipients', 'genres', 'title', 'link',)
+        fields = ('id', 'body', 'likes_count', 'comments_count', 'saves_count', 'created_by', 'created_at', 'comments', 'media_type', 'recipients', 'genres', 'title', 'link',)
 
 class TrendSerializer(serializers.ModelSerializer):
     class Meta:

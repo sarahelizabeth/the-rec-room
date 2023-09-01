@@ -2,7 +2,7 @@
   <div class="card box">
     <div @click="handleShowForm" class="px-4 ml-2">
       <a class="is-size-4 has-text-weight-bold">
-        <span>Create Recommendation</span>
+        <span>Create a Rec</span>
         <span :style="{transform: `rotate(${deg}deg)`}" class="rotation icon is-large">
           <i class="fas fa-plus"></i>
         </span>
@@ -194,7 +194,7 @@ export  default {
         })
     },
     handleShowForm() {
-      this.deg += 45
+      this.deg += 135
       this.showForm = !this.showForm
     },
     handleBlur() {
@@ -250,17 +250,19 @@ export  default {
 
 <style>
 .rotation {
-  transition: transform 0.3s ease-out;
+  transition: transform 0.6s ease-out;
 }
 
 .hidden {
-  transition: height 0.5s ease 0.3s, opacity 0.3s ease-in;
+  transition: height 0.4s ease 0.2s, opacity 0.2s ease-in;
   height: 0px;
   opacity: 0;
+  visibility: hidden;
 }
 .showing {
-  transition: height 0.5s ease, opacity 0.3s ease-in 0.35s;
+  transition: height 0.5s ease, opacity 0.3s ease-in 0.5s;
   height: 370px;
   opacity: 1;
+  visibility: visible;
 }
 </style>

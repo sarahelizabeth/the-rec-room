@@ -8,15 +8,19 @@ def create_notification(request, type_of_notification, post_id=None, recipient_i
   created_by = request.user
 
   if type_of_notification == 'post_like':
-    body = f'{request.user.name} @{request.user.username} liked your recommendation!'
+    body = f'{request.user.name} @{request.user.username} liked your rec!'
+    post = Post.objects.get(pk=post_id)
+    created_for = post.created_by
+  elif type_of_notification == 'post_save':
+    body = f'{request.user.name} @{request.user.username} saved your rec!'
     post = Post.objects.get(pk=post_id)
     created_for = post.created_by
   elif type_of_notification == 'post_comment':
-    body = f'{request.user.name} @{request.user.username} commented on your recommendation!'
+    body = f'{request.user.name} @{request.user.username} commented on your rec!'
     post = Post.objects.get(pk=post_id)
     created_for = post.created_by
   elif type_of_notification == 'post_tag':
-    body = f'{request.user.name} @{request.user.username} has a recommendation for you!'
+    body = f'{request.user.name} @{request.user.username} has a rec for you!'
     post = Post.objects.get(pk=post_id)
     created_by = post.created_by
     recipient = User.objects.get(pk=recipient_id)
