@@ -66,10 +66,9 @@ export default {
         .get(`/api/posts/?trend=${this.$route.params.id}`)
         .then(response => {
           this.posts = response.data
-          console.log('trendview response.data ', response.data)
         })
         .catch(error => {
-          console.error('feed error ', error)
+          console.error('trends GET error ', error)
         })
     },
   }

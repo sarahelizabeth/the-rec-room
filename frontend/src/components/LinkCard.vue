@@ -12,6 +12,7 @@
       <div v-else class="p-3">
         <p class="is-size-6 mb-2">{{ linkData?.title }}</p>
         <p class="is-size-7">{{ linkDescription }}</p>
+        <a :href="link" class="is-size-7">{{ linkAbbreviated }}</a>
       </div>
     </div>
     <!-- <div class="media-right p-3">
@@ -39,7 +40,10 @@ export default {
   },
   computed: {
     linkDescription() {
-      return this.linkData?.description?.length < 130 ? this.linkData?.description : this.linkData?.description?.substring(0, 130) + '...'
+      return this.linkData?.description?.length < 145 ? this.linkData?.description : this.linkData?.description?.substring(0, 145) + '...'
+    },
+    linkAbbreviated() {
+      return this.link.length < 65 ? this.link : this.link.substring(0, 65) + '...'
     }
   },
   methods: {

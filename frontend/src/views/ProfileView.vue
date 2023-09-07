@@ -66,15 +66,16 @@
       <!-- View filters -->
       <div v-if="userStore.user.id === user.id" class="control mb-3">
         <div class="buttons">
-          <button @click="getFeed" class="button">Sent Recs</button>
+          <button @click.prevent="getFeed" class="button">Sent Recs</button>
           <button @click="getReceivedFeed" class="button">Received Recs</button>
+          <button @click="getSavedFeed" class="button">Saved Recs</button>
         </div>
       </div>
 
       <!-- Posts -->
       <div v-if="posts.length > 0">
         <div v-for="post in posts" :key="post.id" class="block">
-          <PostItem :post="post" :user="null" />
+          <PostItem :post="post" :user="null" @refreshSavedFeed="getSavedFeed" />
         </div>
       </div>
 
@@ -147,7 +148,7 @@ export default {
           this.user = response.data.user
         })
         .catch(error => {
-          console.error('feed error ', error)
+          console.error('feed GET error ', error)
         })
     },
     getReceivedFeed() {
@@ -158,7 +159,18 @@ export default {
           this.user = response.data.user
         })
         .catch(error => {
-          console.error('feed error ', error)
+          console.error('received GET error ', error)
+        })
+    },
+    getSavedFeed() {
+      axios
+        .get(`/api/posts/profile/${this.$route.params.id}/saved/`)
+        .then(response => {
+          this.posts = response.data.posts
+          this.user = response.data.user
+        })
+        .catch(error => {
+          console.error('saved GET error ', error)
         })
     },
     getFollows() {

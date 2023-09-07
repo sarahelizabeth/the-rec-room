@@ -26,7 +26,7 @@ class Comment(models.Model):
 
 class Save(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    created_by = models.ForeignKey(User, related_name='saves', null=True, on_delete=models.SET_NULL)
+    created_by = models.ForeignKey(User, related_name='saved_recs', null=True, on_delete=models.SET_NULL)
     created_at = models.DateTimeField(auto_now_add=True)
 
 
@@ -79,6 +79,8 @@ class Post(models.Model):
 
     attachments = models.ManyToManyField(PostAttachment, blank=True)
     link = models.URLField(max_length=255, blank=True, null=True)
+    # SARAH: add link model
+    # link_data = models.JSONField()
     
     likes = models.ManyToManyField(Like, blank=True)
     likes_count = models.IntegerField(default=0)
@@ -86,7 +88,9 @@ class Post(models.Model):
     comments = models.ManyToManyField(Comment, blank=True)
     comments_count = models.IntegerField(default=0)
 
-    saves = models.ManyToManyField(Save, blank=True)
+    saved_recs = models.ManyToManyField(Save, blank=True)
+    # IMPORTANT: should this be changed???? Solution above is currently very complex
+    # saved_by = models.ForeignKey(User, related_name="saved_recs", symmetrical=False, blank=True)
     saves_count = models.IntegerField(default=0)
 
     class Meta:

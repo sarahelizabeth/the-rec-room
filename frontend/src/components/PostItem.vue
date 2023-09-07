@@ -185,7 +185,7 @@ export default {
   },
   mounted() {
     this.getLikes()
-    this.getSaves()
+    this.getSavedRecs()
   },
   computed: {
     mediaClass() {
@@ -214,12 +214,13 @@ export default {
     post: {
       handler: function() {
         this.getLikes()
-        this.getSaves()
+        this.getSavedRecs()
       },
       deep: true,
       immediate: true
     }
   },
+  emits: ['refreshSavedFeed'],
   methods: {
     getLikes() {
       axios
@@ -238,12 +239,12 @@ export default {
           console.error('like GET error ', error)
         })
     },
-    getSaves() {
+    getSavedRecs() {
       axios
         .get(`/api/posts/${this.post.id}/save/`)
         .then(response => {
-          if (response.data.saves.length > 0) {
-            const user_save = response.data.saves.some(i => {
+          if (response.data.saved_recs.length > 0) {
+            const user_save = response.data.saved_recs.some(i => {
               return i.created_by.id === this.userStore.user.id}
             )
             this.isSaved = user_save
@@ -279,6 +280,7 @@ export default {
           }
           else {
             this.post.saves_count -= 1
+            this.$emit('refreshSavedFeed')
           }
         })
         .catch(error => {

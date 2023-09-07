@@ -32,12 +32,12 @@ class PostSerializer(serializers.ModelSerializer):
     genres = GenreSerializer(read_only=True, many=True)
     created_at = serializers.DateTimeField(format='%b %d, %Y %I:%M%p')
     likes = LikeSerializer(read_only=True, many=True)
-    saves = SaveSerializer(read_only=True, many=True)
+    saved_recs = SaveSerializer(read_only=True, many=True)
     media_type = MediaTypeSerializer(read_only=True)
 
     class Meta:
         model = Post
-        fields = ('id', 'body', 'likes', 'likes_count', 'saves', 'saves_count', 'comments_count', 'created_by', 'created_at', 'created_at_formatted', 'media_type', 'recipients', 'genres', 'title', 'link',)
+        fields = ('id', 'body', 'likes', 'likes_count', 'saved_recs', 'saves_count', 'comments_count', 'created_by', 'created_at', 'created_at_formatted', 'media_type', 'recipients', 'genres', 'title', 'link',)
 
 class CommentSerializer(serializers.ModelSerializer):
     created_by = UserSerializer(read_only=True)

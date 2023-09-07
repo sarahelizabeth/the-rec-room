@@ -4,7 +4,7 @@ from rest_framework.decorators import api_view, authentication_classes, permissi
 import requests
 
 from .serializers import PostSerializer, LikeSerializer, PostDetailSerializer, CommentSerializer, TrendSerializer, MediaTypeSerializer, GenreSerializer
-from .models import Post, Like, Comment, Save, Report, Trend, MediaType
+from .models import Post, Like, Comment, Report, Trend, MediaType, Save
 from .forms import PostForm
 
 from account.models import User
@@ -15,12 +15,15 @@ from notification.utils import create_notification
 def post_list(request):
     posts = Post.objects.all()
     trend = request.GET.get('trend', '')
-    media_type = request.GET.get('mediaType', '')
+    media_type_id = request.GET.get('mediaType', '')
 
     if trend:
         posts = posts.filter(body__icontains='#'+trend)
-    elif media_type:
-        posts = posts.filter(media_type=media_type)
+    elif media_type_id:
+        media_type = MediaType.objects.get(pk=media_type_id)
+        posts = media_type.posts.all()
+
+    posts = posts[:16]
 
     serializer = PostSerializer(posts, many=True)
     return JsonResponse(serializer.data, safe=False)
@@ -42,7 +45,7 @@ def post_detail(request, id):
 @api_view(['GET'])
 def post_list_profile(request, id):
     user = User.objects.get(pk=id)
-    posts = Post.objects.filter(created_by_id=id)
+    posts = Post.objects.filter(created_by_id=id)[:16]
 
     user_serializer = UserSerializer(user)
     posts_serializer = PostSerializer(posts, many=True)
@@ -67,13 +70,31 @@ def post_list_profile_received(request, id):
     }, safe=False)
 
 
+@api_view(['GET'])
+def post_list_profile_saved(request, id):
+    user = User.objects.get(pk=id)
+    saves = user.saved_recs.all()
+
+    posts = []
+    for save in saves:
+        posts.append(save.post_set.first())
+
+    user_serializer = UserSerializer(user)
+    posts_serializer = PostSerializer(posts, many=True)
+
+    return JsonResponse({
+        'user': user_serializer.data,
+        'posts': posts_serializer.data
+    }, safe=False)
+
+
 @api_view(['POST'])
 def post_create(request):
     form = PostForm(request.data)
     recipients = request.data.get('recipients')
 
-    # link = request.data.get('link')
-    # link_response = {}
+    link = request.data.get('link')
+    link_response = {}
 
     if form.is_valid():
         post = form.save(commit=False)
@@ -81,17 +102,22 @@ def post_create(request):
         post.save()
         form.save_m2m()
 
-        # if link:
-        #     print(link)
-        #     link_data = requests.get(f'https://jsonlink.io/api/extract?url={link}')
-        #     link_status = link_data.status_code
-        #     if link_status == 200:
-        #         print(f'link data: {link_data.json()}')
-        #         link_response['status'] = 200
-        #         link_response['description'] = link_data.description
-        #         link_response['domain'] = link_data.domain
-        #         link_response['title'] = link_data.title
-        #         link_response['images'] = link_data.images
+        if link:
+            print(link)
+            link_request = requests.get(f'https://jsonlink.io/api/extract?url={link}')
+            print(f'link request: {link_request}')
+            link_status = link_request.status_code
+            print(f'link status: {link_status}')
+            link_data = link_request.json()
+            print(f'link data to json: {link_data}')
+            if link_status == 200:
+                link_response['status'] = 200
+                link_response['description'] = link_data['description']
+                link_response['domain'] = link_data['domain']
+                link_response['title'] = link_data['title']
+                link_response['images'] = link_data['images']
+
+            print(link_response)
 
         for recipient in recipients:
             notification = create_notification(request, 'post_tag', post_id=post.id, recipient_id=recipient)
@@ -191,11 +217,11 @@ def post_save(request, id):
 
     if request.method == 'POST':
         message = 'post saved'
-        if not post.saves.filter(created_by=request.user):
+        if not post.saved_recs.filter(created_by=request.user):
             save = Save.objects.create(created_by=request.user)
         
             post.saves_count += 1
-            post.saves.add(save)
+            post.saved_recs.add(save)
             post.save()
 
             serializer = PostSerializer(post)
@@ -207,10 +233,10 @@ def post_save(request, id):
                 'post_save': serializer.data,
             }, safe=False)
         else:
-            save = post.saves.get(created_by=request.user)
+            save = post.saved_recs.get(created_by=request.user)
 
             post.saves_count -= 1
-            post.saves.remove(save)
+            post.saved_recs.remove(save)
             post.save()
             save.delete()
 

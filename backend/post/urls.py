@@ -7,6 +7,7 @@ urlpatterns = [
     path('<uuid:id>/', api.post_detail, name='post_detail'),
     path('profile/<uuid:id>/', api.post_list_profile, name='post_list_profile'),
     path('profile/<uuid:id>/received/', api.post_list_profile_received, name='post_list_profile_received'),
+    path('profile/<uuid:id>/saved/', api.post_list_profile_saved, name='post_list_profile_saved'),
     path('create/', api.post_create, name='post_create'),
     path('<uuid:id>/like/', api.post_like, name='post_like'),
     path('<uuid:id>/save/', api.post_save, name='post_save'),
