@@ -88,7 +88,6 @@
 
 <script>
 import axios from 'axios'
-import CreatePost from '../components/CreatePost.vue'
 import Follows from '../components/Follows.vue'
 import PostItem from '../components/PostItem.vue'
 
@@ -97,7 +96,6 @@ import { useUserStore } from '@/stores/user'
 export default {
   name: 'ProfileView',
   components: {
-    CreatePost,
     Follows,
     PostItem,
   },
@@ -208,7 +206,8 @@ export default {
       axios
         .get(`/api/chat/${this.$route.params.id}/get-or-create/`)
         .then(response => {
-          this.$router.push('/chat')
+          console.log('start chat response ', response.data)
+          this.$router.push(`/chat/${response.data.id}/`)
         })
         .catch(error => {
           console.error('start chat error ', error)

@@ -10,7 +10,7 @@ class ChatSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Chat
-        fields = ('id', 'users', 'modified_at_formatted',)
+        fields = ('id', 'users', 'modified_at_formatted', 'archived',)
 
 
 class ChatMessageSerializer(serializers.ModelSerializer):
@@ -20,7 +20,7 @@ class ChatMessageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ChatMessage
-        fields = ('id', 'sent_to', 'created_by', 'created_at', 'body',)
+        fields = ('id', 'sent_to', 'created_by', 'created_at', 'body', 'viewed',)
 
 
 class ChatDetailSerializer(serializers.ModelSerializer):

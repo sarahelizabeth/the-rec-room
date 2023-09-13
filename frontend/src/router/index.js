@@ -60,10 +60,15 @@ const routes = [
       component: PostView
     },
     {
-      path: '/chat',
+      path: '/chat/:id',
       name: 'chat',
       component: ChatView
     },
+    // {
+    //   path: '/chat/:id',
+    //   name: 'chatdetail',
+    //   component: ChatDetailView
+    // },
     {
       path: '/trends/:id',
       name: 'trend',

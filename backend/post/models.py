@@ -39,7 +39,6 @@ class PostAttachment(models.Model):
 class Genre(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=255)
-    # created_by = models.ForeignKey(User, related_name='genres', blank=True, null=True, on_delete=models.SET_NULL)
 
     class Meta:
         ordering = ('name',)

@@ -18,6 +18,7 @@ def chat_list(request):
 
 @api_view(['GET'])
 def chat_detail(request, id):
+    print(f'chat detail id: {id}')
     chat = Chat.objects.filter(users__in=list([request.user])).get(pk=id)
     serializer = ChatDetailSerializer(chat)
 

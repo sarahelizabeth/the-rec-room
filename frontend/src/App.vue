@@ -35,9 +35,9 @@
         </div>
 
         <div class="navbar-item">
-          <RouterLink id="navLink" :to="{ 'name': 'chat' }">
+          <!-- <RouterLink id="navLink" :to="{ 'name': 'chat' }">
             Chat
-          </RouterLink>
+          </RouterLink> -->
         </div>
 
         <div class="navbar-item">

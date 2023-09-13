@@ -153,14 +153,22 @@ export default {
   mounted() {
     this.getChats()
   },
+  watch: {
+    '$route.params.id': {
+      handler: function() {
+        this.getMessages()
+      },
+      deep: true,
+      immediate: true,
+    }
+  },
   methods: {
     setActiveChat(id) {
-      this.activeChat = id
-      this.getMessages()
+      this.$router.push(`/chat/${id}/`)
     },
     getChats() {
       axios
-        .get('/api/chat')
+        .get('/api/chat/')
         .then(response => {
           this.chats = response.data
           if (this.chats.length) {
@@ -174,7 +182,7 @@ export default {
     },
     getMessages() {
       axios
-        .get(`api/chat/${this.activeChat}`)
+        .get(`api/chat/${this.$route.params.id}/`)
         .then(response => {
           this.activeChat = response.data
         })
@@ -184,7 +192,7 @@ export default {
     },
     submitForm() {
       axios
-        .post(`api/chat/${this.activeChat.id}/send/`, {
+        .post(`api/chat/${this.$route.params.id}/send/`, {
           body: this.body
         })
         .then(response => {

@@ -25,11 +25,11 @@
             </p>
           </div>
 
-          <!-- <template v-if="errors.length > 0">
+          <template v-if="errors.length > 0">
             <div class="box has-background-warning">
               <p v-for="error in errors" :key="error">{{ error }}</p>
             </div>
-          </template> -->
+          </template>
 
           <div class="field is-grouped is-grouped-centered mt-4">
             <div class="control">
@@ -79,7 +79,7 @@ export default {
 
       if (!isEmailValid) return
 
-      // if (this.errors.length === 0) {
+      if (this.errors.length === 0) {
       await axios
         .post('/api/login/', this.form)
         .then(response => {
@@ -90,8 +90,8 @@ export default {
           console.error('login POST error ', error)
           this.errors.push('The email or password is incorrect, or the user has not been activated.')
         })
-      // }
-      // if (this.errors.length === 0) {
+      }
+      if (this.errors.length === 0) {
       await axios
         .get('/api/me/')
         .then(response => {
@@ -102,7 +102,7 @@ export default {
         .catch(error => {
             console.error('login GET error', error)
         })
-      // }
+      }
     },
     validateEmail(value) {
       // if (!value || value == '') {
