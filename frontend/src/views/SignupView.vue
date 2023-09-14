@@ -62,20 +62,28 @@
 
           <div class="field">
             <label class="label">Password</label>
-            <p class="control has-icons-left">
-              <input v-model="form.password1" class="input" type="password" placeholder="Password">
+            <p class="control has-icons-left has-icons-right">
+              <input v-model="form.password1" class="input" :type="passwordInputType" placeholder="Password">
               <span class="icon is-small is-left">
                 <i class="fas fa-lock"></i>
               </span>
+              <a @click="toggleShowPassword" class="icon is-small is-right is-clickable">
+                <i v-if="showPassword" class="fas fa-regular fa-eye"></i>
+                <i v-else class="fas fa-regular fa-eye-slash"></i>
+              </a>
             </p>
           </div>
 
           <div class="field">
-            <p class="control has-icons-left">
-              <input v-model="form.password2" class="input" type="password" placeholder="Repeat Password">
+            <p class="control has-icons-left has-icons-right">
+              <input v-model="form.password2" class="input" :type="passwordInputType" placeholder="Repeat Password">
               <span class="icon is-small is-left">
                 <i class="fas fa-lock"></i>
               </span>
+              <a @click="toggleShowPassword" class="icon is-small is-right is-clickable">
+                <i v-if="showPassword" class="fas fa-regular fa-eye"></i>
+                <i v-else class="fas fa-regular fa-eye-slash"></i>
+              </a>
             </p>
           </div>
 
@@ -115,11 +123,22 @@ export default {
         password1: '',
         password2: '',
       },
+      showPassword: false,
+      passwordInputType: 'password',
       errors: [],
       messages: [],
     }
   },
   methods: {
+    toggleShowPassword() {
+      if (this.showPassword == false) {
+        this.showPassword = true
+        this.passwordInputType = 'text'
+      } else {
+        this.showPassword = false
+        this.passwordInputType = 'password'
+      }
+    },
     submitForm() {
       this.errors = []
       this.messages = []

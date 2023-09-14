@@ -17,11 +17,15 @@
 
           <div class="field">
             <label class="label">Password</label>
-            <p class="control has-icons-left">
-              <input v-model="form.password" class="input" type="password" placeholder="Password">
+            <p class="control has-icons-left has-icons-right">
+              <input v-model="form.password" class="input" :type="passwordInputType" placeholder="Password">
               <span class="icon is-small is-left">
                 <i class="fas fa-lock"></i>
               </span>
+              <a @click="toggleShowPassword" class="icon is-small is-right is-clickable">
+                <i v-if="showPassword" class="fas fa-regular fa-eye"></i>
+                <i v-else class="fas fa-regular fa-eye-slash"></i>
+              </a>
             </p>
           </div>
 
@@ -64,6 +68,8 @@ export default {
         email: '',
         password: '',
       },
+      showPassword: false,
+      passwordInputType: 'password',
       isEmailValid: true,
       errors: [],
     }
@@ -73,6 +79,15 @@ export default {
       const checkEmail = this.validateEmail(e.target.value)
       if (checkEmail) this.isEmailValid = true
       else this.isEmailValid = false
+    },
+    toggleShowPassword() {
+      if (this.showPassword == false) {
+        this.showPassword = true
+        this.passwordInputType = 'text'
+      } else {
+        this.showPassword = false
+        this.passwordInputType = 'password'
+      }
     },
     async submitForm() {
       const isEmailValid = this.validateEmail(this.form.email)

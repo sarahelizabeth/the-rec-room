@@ -1,7 +1,7 @@
 <template>
   <div class="columns">
     <!-- Feed container -->
-    <div class="column is-two-thirds">
+    <div class="column">
       <!-- Create post -->
       <div v-if="userStore.user.isAuthenticated">
         <CreatePost :user="null" :posts="posts" />
@@ -19,7 +19,7 @@
     </div>
 
     <!-- Right side tags and navigation -->
-    <div class="column is-narrow">
+    <div class="column is-narrow is-hidden-mobile">
       <!-- <MediaTypes /> -->
       <Trends />
     </div>

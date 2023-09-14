@@ -13,14 +13,14 @@
         </RouterLink>
       </div>
 
-      <a @click="showNav = !showNav" :class="{'is-active': showNav}" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+      <a @click="showNav = !showNav" :class="{'is-active': showNav}" role="button" class="navbar-burger has-text-white" aria-label="menu" aria-expanded="false" data-target="navbar">
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
       </a>
     </div>
 
-    <div :class="{'is-active': showNav}" id="navbarBasicExample" class="navbar-menu">
+    <div :class="{'is-active': showNav}" id="navbar" class="navbar-menu">
       <div v-if="userStore.user.isAuthenticated" class="navbar-start">
         <div class="navbar-item">
           <RouterLink id="navLink" :to="{ 'name': 'feed' }">
@@ -137,5 +137,14 @@ export default {
   }
   .navbar-dropdown {
     width: 150px;
+  }
+
+  @media screen and (max-width: 1023px) {
+    #navLink {
+      color: #50409A;
+    }
+    .navbar-item:hover {
+      background-color: hsl(0, 0%, 96%);
+    }
   }
 </style>
