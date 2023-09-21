@@ -2,37 +2,35 @@
   <div class="columns">
     <!-- Welcome text -->
     <div class="column is-5 is-offset-1">
-      <div class="box content" style="border: 2px solid #964EC2;">
-        <a href="https://www.youtube.com/watch?v=WB8XDk3sQBc" target="_blank" class="primary-text-purple has-text-weight-bold is-size-4">
-          Don't Panic! <i class="fas fa-user-astronaut ml-1"></i>
+      <div class="box content" style="border: 2px solid #964ec2">
+        <a
+          href="https://www.youtube.com/watch?v=WB8XDk3sQBc"
+          target="_blank"
+          class="primary-text-purple has-text-weight-bold is-size-4"
+        >
+          Create Your Profile
         </a>
         <p class="mt-3">
-          If you're reading this, that means Sarah has roped you into testing her <s>stupid</s>
-          awesome app! Once you've created an account, you will join the tens of other users of
-          <strong class="primary-text-purple has-text-weight-bold">The Rec Room</strong>: a
-          movie, TV, music, and book recommendation app for people who don't suck.
+          Once you enter your name and email, come up with a totally rad username, and pick a secure password (at least
+          one uppercase letter, one lowercase letter, and one number), you will receive an email containing an
+          activation link.
+          <strong class="primary-text-purple has-text-weight-bold"
+            >You will not be able to log in until you click this link!!</strong
+          >
+          Once you've done so, come back here and log in to get started with the greatest social media app ever
+          conceived by man.
         </p>
-        <p>
-          Once you've given me all of your personal information (including, but not limited to,
-          your name, email address, social security number, blood type, and password), you will 
-          be able to create trends, chat with other users, and—of course—pester your friends 
-          and loved ones with recs for all your favorite <s>dumb bullshit</s> media.
-        </p>
-        <!-- <p>
-          And, of course, <span class="has-text-weight-semibold primary-text-purple">
-            don't forget to bring a towel!</span>
-        </p> -->
       </div>
     </div>
 
     <!-- Sign up form -->
     <div class="column is-5">
-      <div class="box" >
+      <div class="box">
         <form v-on:submit.prevent="submitForm">
           <div class="field">
             <label class="label">Name</label>
             <div class="control">
-              <input v-model="form.name" class="input" type="text" placeholder="Your full name...">
+              <input v-model="form.name" class="input" type="text" placeholder="Your full name..." />
             </div>
           </div>
 
@@ -40,7 +38,7 @@
             <label class="label">Username</label>
             <div class="control has-icons-left has-icons-right">
               <!-- Add class binding for "is-success" and/or "is-danger" -->
-              <input v-model="form.username" class="input" type="text" placeholder="An awesome username...">
+              <input v-model="form.username" class="input" type="text" placeholder="An awesome username..." />
               <span class="icon is-small is-left">
                 <i class="fas fa-user"></i>
               </span>
@@ -52,7 +50,7 @@
             <label class="label">Email</label>
             <div class="control has-icons-left has-icons-right">
               <!-- Add class binding for "is-success" and/or "is-danger" -->
-              <input v-model="form.email" class="input" type="email" placeholder="A valid email...">
+              <input v-model="form.email" class="input" type="email" placeholder="A valid email..." />
               <span class="icon is-small is-left">
                 <i class="fas fa-envelope"></i>
               </span>
@@ -63,7 +61,7 @@
           <div class="field">
             <label class="label">Password</label>
             <p class="control has-icons-left has-icons-right">
-              <input v-model="form.password1" class="input" :type="passwordInputType" placeholder="Password">
+              <input v-model="form.password1" class="input" :type="passwordInputType" placeholder="Password" />
               <span class="icon is-small is-left">
                 <i class="fas fa-lock"></i>
               </span>
@@ -76,7 +74,7 @@
 
           <div class="field">
             <p class="control has-icons-left has-icons-right">
-              <input v-model="form.password2" class="input" :type="passwordInputType" placeholder="Repeat Password">
+              <input v-model="form.password2" class="input" :type="passwordInputType" placeholder="Repeat Password" />
               <span class="icon is-small is-left">
                 <i class="fas fa-lock"></i>
               </span>
@@ -111,83 +109,85 @@
 </template>
 
 <script>
-import axios from 'axios'
+  import axios from 'axios'
 
-export default {
-  data() {
-    return {
-      form: {
-        email: '',
-        username: '',
-        name: '',
-        password1: '',
-        password2: '',
-      },
-      showPassword: false,
-      passwordInputType: 'password',
-      errors: [],
-      messages: [],
-    }
-  },
-  methods: {
-    toggleShowPassword() {
-      if (this.showPassword == false) {
-        this.showPassword = true
-        this.passwordInputType = 'text'
-      } else {
-        this.showPassword = false
-        this.passwordInputType = 'password'
+  export default {
+    data() {
+      return {
+        form: {
+          email: '',
+          username: '',
+          name: '',
+          password1: '',
+          password2: '',
+        },
+        showPassword: false,
+        passwordInputType: 'password',
+        errors: [],
+        messages: [],
       }
     },
-    submitForm() {
-      this.errors = []
-      this.messages = []
+    methods: {
+      toggleShowPassword() {
+        if (this.showPassword == false) {
+          this.showPassword = true
+          this.passwordInputType = 'text'
+        } else {
+          this.showPassword = false
+          this.passwordInputType = 'password'
+        }
+      },
+      submitForm() {
+        this.errors = []
+        this.messages = []
 
-      if (this.form.name === '') {
-        this.errors.push('Your name is missing')
-      }
+        if (this.form.name === '') {
+          this.errors.push('Your name is missing')
+        }
 
-      if (this.form.email === '') {
-        this.errors.push('Your email is missing')
-      }
+        if (this.form.email === '') {
+          this.errors.push('Your email is missing')
+        }
 
-      if (this.form.username === '') {
-        this.errors.push('Your username is missing')
-      }
+        if (this.form.username === '') {
+          this.errors.push('Your username is missing')
+        }
 
-      if (this.form.password1 === '') {
-        this.errors.push('Your password is missing')
-      }
+        if (this.form.password1 === '') {
+          this.errors.push('Your password is missing')
+        }
 
-      if (this.form.password1 !== this.form.password2) {
-        this.errors.push('Passwords do not match')
-      }
+        if (this.form.password1 !== this.form.password2) {
+          this.errors.push('Passwords do not match')
+        }
 
-      if (this.errors.length === 0) {
-        axios
-          .post('/api/signup/', this.form)
-          .then(response => {
-            if (response.data.message === 'success') {
-              this.messages.push('User registered successfully! Please activate your account by following the link that was sent to your email.')
-              
-              this.form.email = ''
-              this.form.name = ''
-              this.form.username = ''
-              this.form.password1 = ''
-              this.form.password2 = ''
-            } else {
-              const data = JSON.parse(response.data.message)
-              
-              for (const key in data){
-                this.errors.push(data[key][0].message)
+        if (this.errors.length === 0) {
+          axios
+            .post('/api/signup/', this.form)
+            .then((response) => {
+              if (response.data.message === 'success') {
+                this.messages.push(
+                  'User registered successfully! Please activate your account by following the link that was sent to your email.'
+                )
+
+                this.form.email = ''
+                this.form.name = ''
+                this.form.username = ''
+                this.form.password1 = ''
+                this.form.password2 = ''
+              } else {
+                const data = JSON.parse(response.data.message)
+
+                for (const key in data) {
+                  this.errors.push(data[key][0].message)
+                }
               }
-            }
-          })
-          .catch(error => {
-            console.error('signup error ', error)
-          })
-      }
-    }
+            })
+            .catch((error) => {
+              console.error('signup error ', error)
+            })
+        }
+      },
+    },
   }
-}
 </script>
