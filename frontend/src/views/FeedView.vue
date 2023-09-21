@@ -1,5 +1,5 @@
 <template>
-  <div class="columns">
+  <div class="columns is-desktop">
     <!-- Feed container -->
     <div class="column">
       <!-- Create post -->
@@ -27,63 +27,63 @@
 </template>
 
 <script>
-import axios from 'axios'
-import CreatePost from '../components/CreatePost.vue'
-import Follows from '../components/Follows.vue'
-import Trends from '../components/Trends.vue'
-import PostItem from '../components/PostItem.vue'
-import MediaTypeButtons from '../components/MediaTypeButtons.vue'
-import { useUserStore } from '@/stores/user'
+  import axios from 'axios'
+  import CreatePost from '../components/CreatePost.vue'
+  import Follows from '../components/Follows.vue'
+  import Trends from '../components/Trends.vue'
+  import PostItem from '../components/PostItem.vue'
+  import MediaTypeButtons from '../components/MediaTypeButtons.vue'
+  import { useUserStore } from '@/stores/user'
 
-export default {
-  name: 'FeedView',
-  components: {
-    CreatePost,
-    Follows,
-    Trends,
-    PostItem,
-    MediaTypeButtons,
-  },
-  setup() {
-    const userStore = useUserStore()
-    return {
-      userStore,
-    }
-  },
-  data() {
-    return {
-      posts: [],
-    }
-  },
-  mounted() {
-    this.getFeed()
-  },
-  methods: {
-    getFeed() {
-      axios
-        .get('/api/posts/')
-        .then(response => {
-          this.posts = response.data
-        })
-        .catch(error => {
-          console.error('get feed error ', error)
-        })
+  export default {
+    name: 'FeedView',
+    components: {
+      CreatePost,
+      Follows,
+      Trends,
+      PostItem,
+      MediaTypeButtons,
     },
-    filterPosts(id) {
-      if (id == -1) {
-        this.getFeed()
-        return
+    setup() {
+      const userStore = useUserStore()
+      return {
+        userStore,
       }
-      
-      axios
-        .get(`/api/posts/?mediaType=${id}`)
-        .then(response => {
-          this.posts = response.data
-        })
-        .catch(error => {
-          console.error('feed error ', error)
-        })
-    }
+    },
+    data() {
+      return {
+        posts: [],
+      }
+    },
+    mounted() {
+      this.getFeed()
+    },
+    methods: {
+      getFeed() {
+        axios
+          .get('/api/posts/')
+          .then((response) => {
+            this.posts = response.data
+          })
+          .catch((error) => {
+            console.error('get feed error ', error)
+          })
+      },
+      filterPosts(id) {
+        if (id == -1) {
+          this.getFeed()
+          return
+        }
+
+        axios
+          .get(`/api/posts/?mediaType=${id}`)
+          .then((response) => {
+            this.posts = response.data
+          })
+          .catch((error) => {
+            console.error('feed error ', error)
+          })
+      },
+    },
   }
-}
 </script>

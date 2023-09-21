@@ -1,13 +1,13 @@
 <template>
-  <div class="columns">
+  <div class="columns is-desktop">
     <!-- Main section -->
     <div class="column is-two-thirds">
       <!-- Search bar -->
       <div class="box">
         <form method="POST" v-on:submit.prevent="submitForm">
           <div class="field has-addons">
-            <p :class="{'is-loading': loading}" class="control has-icons-left is-expanded">
-              <input v-model="query" class="input" type="search" placeholder="Search...">
+            <p :class="{ 'is-loading': loading }" class="control has-icons-left is-expanded">
+              <input v-model="query" class="input" type="search" placeholder="Search..." />
               <span class="icon is-small is-left">
                 <i class="fa-solid fa-magnifying-glass"></i>
               </span>
@@ -28,7 +28,7 @@
                 <!-- Profile image -->
                 <figure class="media-left">
                   <div class="rounded-img-container-sm">
-                    <img class="rounded-img" :src="user.get_avatar">
+                    <img class="rounded-img" :src="user.get_avatar" />
                   </div>
                 </figure>
                 <!-- User name and info -->
@@ -36,9 +36,9 @@
                   <div class="content">
                     <p>
                       <strong>
-                        <RouterLink :to="{name: 'profile', params:{'id': user.id}}">{{ user.name }}</RouterLink>
+                        <RouterLink :to="{ name: 'profile', params: { id: user.id } }">{{ user.name }}</RouterLink>
                       </strong>
-                      <br>
+                      <br />
                       @{{ user.username }}
                     </p>
                   </div>
@@ -67,7 +67,7 @@
       </div>
     </div>
     <!-- Sidebar -->
-    <div class="column is-one-third">
+    <div class="column is-one-third is-hidden-mobile">
       <!-- Figure out how to pass in user as the prop for search view -->
       <!-- <Follows /> -->
       <Trends />
@@ -76,45 +76,45 @@
 </template>
 
 <script>
-import axios from 'axios';
-import Follows from '../components/Follows.vue'
-import Trends from '../components/Trends.vue'
-import PostItem from '../components/PostItem.vue'
+  import axios from 'axios'
+  import Follows from '../components/Follows.vue'
+  import Trends from '../components/Trends.vue'
+  import PostItem from '../components/PostItem.vue'
 
-export default {
-  name: 'SearchView',
-  components: {
-    Follows,
-    Trends,
-    PostItem,
-  },
-  data () {
-    return {
-      query: '',
-      users: [],
-      posts: [],
-      loading: false,
-    }
-  },
-  methods: {
-    submitForm() {
-      this.loading = true
-      if (this.query === '' | this.query === ' ') return
-      
-      axios
-        .post('/api/search/', {
-          query: this.query
-        })
-        .then(response => {
-          this.users = response.data.users
-          this.posts = response.data.posts
-          this.loading = false
-        })
-        .catch(error => {
-          console.error('search error ', error)
-          this.loading = false
-        })
-    }
+  export default {
+    name: 'SearchView',
+    components: {
+      Follows,
+      Trends,
+      PostItem,
+    },
+    data() {
+      return {
+        query: '',
+        users: [],
+        posts: [],
+        loading: false,
+      }
+    },
+    methods: {
+      submitForm() {
+        this.loading = true
+        if ((this.query === '') | (this.query === ' ')) return
+
+        axios
+          .post('/api/search/', {
+            query: this.query,
+          })
+          .then((response) => {
+            this.users = response.data.users
+            this.posts = response.data.posts
+            this.loading = false
+          })
+          .catch((error) => {
+            console.error('search error ', error)
+            this.loading = false
+          })
+      },
+    },
   }
-}
 </script>

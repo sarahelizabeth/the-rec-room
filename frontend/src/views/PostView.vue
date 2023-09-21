@@ -1,7 +1,6 @@
 <template>
   <div class="columns">
     <div class="column is-two-thirds">
-
       <!-- Post -->
       <div v-if="post.id" class="block">
         <PostItem :post="post" :user="user" :showDetail="true" />
@@ -40,75 +39,75 @@
     </div>
 
     <!-- Right-hand gutter navigation -->
-    <div class="column is-narrow">
+    <div class="column is-narrow is-hidden-mobile">
       <Trends />
     </div>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
-import Trends from '../components/Trends.vue'
-import PostItem from '../components/PostItem.vue'
-import CommentItem from '../components/CommentItem.vue'
+  import axios from 'axios'
+  import Trends from '../components/Trends.vue'
+  import PostItem from '../components/PostItem.vue'
+  import CommentItem from '../components/CommentItem.vue'
 
-export default {
-  name: 'PostView',
-  components: {
-    Trends,
-    PostItem,
-    CommentItem
-  },
-  data() {
-    return {
-      user: {},
-      post: {
-        id: null,
-        comments: []
+  export default {
+    name: 'PostView',
+    components: {
+      Trends,
+      PostItem,
+      CommentItem,
+    },
+    data() {
+      return {
+        user: {},
+        post: {
+          id: null,
+          comments: [],
+        },
+        body: '',
+      }
+    },
+    mounted() {
+      this.getPost()
+    },
+    methods: {
+      getPost() {
+        axios
+          .get(`/api/posts/${this.$route.params.id}/`)
+          .then((response) => {
+            this.post = response.data.post
+            this.user = response.data.user
+          })
+          .catch((error) => {
+            console.error('post detail error', error)
+          })
       },
-      body: ''
-    }
-  },
-  mounted() {
-    this.getPost()
-  },
-  methods: {
-    getPost() {
-      axios
-        .get(`/api/posts/${this.$route.params.id}/`)
-        .then(response => {
-          this.post = response.data.post
-          this.user = response.data.user
-        })
-        .catch(error => {
-          console.error('post detail error', error)
-        })
-    },
-    submitForm() {
-      axios
-        .post(`/api/posts/${this.$route.params.id}/comment/`, {
-          'body': this.body
-        })
-        .then(response => {
-          this.post.comments.push(response.data)
-          this.post.comments_count += 1
-          this.body = ''
-        })
-        .catch(error => {
-          console.error('comment error', error)
-        })
-    },
-    deleteComment(id) {
-      axios
-        .delete(`/api/posts/${this.$route.params.id}/comment/${id}/delete/`)
-        .then(response => {
-          // this.showModal = false
-          this.getPost()
-        })
-        .catch(error => {
-          console.error('delete comment error ', error)
-        })
+      submitForm() {
+        axios
+          .post(`/api/posts/${this.$route.params.id}/comment/`, {
+            body: this.body,
+          })
+          .then((response) => {
+            this.post.comments.push(response.data)
+            this.post.comments_count += 1
+            this.body = ''
+          })
+          .catch((error) => {
+            console.error('comment error', error)
+          })
+      },
+      deleteComment(id) {
+        axios
+          .delete(`/api/posts/${this.$route.params.id}/comment/${id}/delete/`)
+          .then((response) => {
+            // this.showModal = false
+            this.getPost()
+          })
+          .catch((error) => {
+            console.error('delete comment error ', error)
+          })
+      },
     },
   }
-}
 </script>

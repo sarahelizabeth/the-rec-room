@@ -11,11 +11,11 @@
         Don't Panic! <i class="fas fa-user-astronaut ml-1"></i>
       </a>
       <p class="mt-3">
-        If you're reading this, that means Sarah has roped you into testing her <s>stupid</s>
-        awesome app! Once you've created an account, you will join the tens of other users of
+        If you're reading this, that means Sarah has roped you into testing her awesome app! Once you've created an
+        account, you will join the tens of other users of
         <strong class="primary-text-purple has-text-weight-bold">The Rec Room</strong>: a movie, TV, music, and book
         recommendation app in which you will be able to create trends, chat with other users, and—of course—pester your
-        friends and loved ones with recs for all your favorite <s>dumb bullshit</s> media.
+        friends, loved ones, and enemies with recs for all your favorite media.
       </p>
       <!-- Buttons for mobile -->
       <div class="field is-grouped is-grouped-centered mt-3 is-hidden-tablet is-hidden-destop is-hidden-fullscreen">

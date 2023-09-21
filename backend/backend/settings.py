@@ -9,13 +9,15 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
+
+import os
+import sys
+import dj_database_url
+
 from datetime import timedelta
 from pathlib import Path
 from dotenv import load_dotenv
-import os
-import sys
 from django.core.management.utils import get_random_secret_key
-import dj_database_url
 
 load_dotenv()
 
@@ -26,22 +28,20 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", get_random_secret_key())
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', get_random_secret_key())
 # SECRET_KEY = 'django-insecure-ufv^b1+3+rt*#r3ej@s5*ad=e5r#nf%rnchnon#c0liy6nzx(8'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("DEBUG", "False") == "True"
-# DEBUG=True
+DEBUG = os.getenv('DEBUG', False) == True
+# DEBUG = True
 
-ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
+ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', '127.0.0.1,localhost').split(",")
 # ALLOWED_HOSTS=['localhost', '127.0.0.1']
 
 WEBSITE_URL = os.getenv('DJANGO_WEBSITE_URL', 'http://127.0.0.1:8000')
 # WEBSITE_URL = 'http://127.0.0.1:8000'
 
-# DEVELOPMENT MODE , set for digital ocean
-DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") == "True"
+DEVELOPMENT_MODE = os.getenv('DEVELOPMENT_MODE', 'False') == 'True'
+# DEVELOPMENT_MODE = True
 
 AUTH_USER_MODEL = 'account.User'
 
