@@ -7,6 +7,7 @@ import FeedView from '../views/FeedView.vue'
 import ProfileView from '../views/ProfileView.vue'
 import PostView from '../views/PostView.vue'
 import ChatView from '../views/ChatView.vue'
+import ChatDetailView from '../views/ChatDetailView.vue'
 import TrendView from '../views/TrendView.vue'
 import EditProfileView from '../views/EditProfileView.vue'
 import EditPasswordView from '../views/EditPasswordView.vue'
@@ -61,14 +62,15 @@ const routes = [
     },
     {
       path: '/chat/:id',
+      name: 'chatdetail',
+      component: ChatDetailView,
+      props: true,
+    },
+    {
+      path: '/chat',
       name: 'chat',
       component: ChatView
     },
-    // {
-    //   path: '/chat/:id',
-    //   name: 'chatdetail',
-    //   component: ChatDetailView
-    // },
     {
       path: '/trends/:id',
       name: 'trend',
