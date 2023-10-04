@@ -19,6 +19,19 @@
       </p>
       <!-- Buttons for mobile -->
       <div class="field is-grouped is-grouped-centered mt-3 is-hidden-tablet is-hidden-destop is-hidden-fullscreen">
+        <!-- <div v-if="userStore.user.isAuthenticated">
+          <div class="control">
+            <RouterLink :to="{ name: 'feed' }" class="button is-secondary-purple has-text-white">
+              <strong>Feed</strong>
+            </RouterLink>
+          </div>
+          <div class="control">
+            <RouterLink :to="{ name: 'profile', params: { id: userStore.user.id } }" @click.native="closeNav">
+              Profile
+            </RouterLink>
+          </div>
+        </div> -->
+        <!-- <div v-else> -->
         <div class="control">
           <RouterLink :to="{ name: 'signup' }" class="button is-secondary-purple has-text-white">
             <strong>Sign up</strong>
@@ -27,6 +40,7 @@
         <div class="control">
           <RouterLink :to="{ name: 'login' }" class="button is-outlined"> Log in </RouterLink>
         </div>
+        <!-- </div> -->
       </div>
     </div>
   </div>

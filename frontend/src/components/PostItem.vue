@@ -60,7 +60,7 @@
       </div>
 
       <!-- Bottom elements -->
-      <nav class="level is-mobile">
+      <nav class="level">
         <div class="level-left">
           <div class="level-item" @click="likePost(post.id)">
             <a :class="{ 'has-text-danger': isLiked, 'has-text-grey': !isLiked }" class="icon is-small"
@@ -165,19 +165,19 @@
 </template>
 
 <script>
-  import axios from 'axios'
-  import { RouterLink } from 'vue-router'
-  import { useUserStore } from '@/stores/user'
-  import PostActionModal from '../components/PostActionModal.vue'
-  import LinkCard from './LinkCard.vue'
+  import axios from 'axios';
+  import { RouterLink } from 'vue-router';
+  import { useUserStore } from '@/stores/user';
+  import PostActionModal from '../components/PostActionModal.vue';
+  import LinkCard from './LinkCard.vue';
 
   export default {
     setup() {
-      const userStore = useUserStore()
+      const userStore = useUserStore();
 
       return {
         userStore,
-      }
+      };
     },
     props: {
       post: Object,
@@ -196,25 +196,25 @@
         showDropdown: false,
         isEditing: false,
         showModal: false,
-      }
+      };
     },
     mounted() {
-      this.getLikes()
-      this.getSavedRecs()
+      this.getLikes();
+      this.getSavedRecs();
     },
     computed: {
       mediaClass() {
-        let mediaClass = ''
-        const mediaName = this.post.media_type.name
+        let mediaClass = '';
+        const mediaName = this.post.media_type.name;
 
         if (mediaName == 'Television') {
-          mediaClass = 'is-info'
+          mediaClass = 'is-info';
         } else if (mediaName == 'Film') {
-          mediaClass = 'is-primary'
+          mediaClass = 'is-primary';
         } else if (mediaName == 'Book') {
-          mediaClass = 'is-warning'
+          mediaClass = 'is-warning';
         } else if (mediaName == 'Music') {
-          mediaClass = 'is-danger'
+          mediaClass = 'is-danger';
         }
 
         return {
@@ -222,14 +222,14 @@
           'is-primary': mediaClass == 'is-primary',
           'is-danger': mediaClass == 'is-danger',
           'is-warning': mediaClass == 'is-warning',
-        }
+        };
       },
     },
     watch: {
       post: {
         handler: function () {
-          this.getLikes()
-          this.getSavedRecs()
+          this.getLikes();
+          this.getSavedRecs();
         },
         deep: true,
         immediate: true,
@@ -243,16 +243,16 @@
           .then((response) => {
             if (response.data.likes.length > 0) {
               const user_like = response.data.likes.some((i) => {
-                return i.created_by.id === this.userStore.user.id
-              })
-              this.isLiked = user_like
+                return i.created_by.id === this.userStore.user.id;
+              });
+              this.isLiked = user_like;
             } else {
-              this.isLiked = false
+              this.isLiked = false;
             }
           })
           .catch((error) => {
-            console.error('like GET error ', error)
-          })
+            console.error('like GET error ', error);
+          });
       },
       getSavedRecs() {
         axios
@@ -260,49 +260,49 @@
           .then((response) => {
             if (response.data.saved_recs.length > 0) {
               const user_save = response.data.saved_recs.some((i) => {
-                return i.created_by.id === this.userStore.user.id
-              })
-              this.isSaved = user_save
+                return i.created_by.id === this.userStore.user.id;
+              });
+              this.isSaved = user_save;
             } else {
-              this.isSaved = false
+              this.isSaved = false;
             }
           })
           .catch((error) => {
-            console.error('save GET error ', error)
-          })
+            console.error('save GET error ', error);
+          });
       },
       likePost(id) {
         axios
           .post(`/api/posts/${id}/like/`)
           .then((response) => {
             if (response.data.message == 'like created') {
-              this.post.likes_count += 1
+              this.post.likes_count += 1;
             } else {
-              this.post.likes_count -= 1
+              this.post.likes_count -= 1;
             }
           })
           .catch((error) => {
-            console.error('like POST error ', error)
-          })
+            console.error('like POST error ', error);
+          });
       },
       savePost(id) {
         axios
           .post(`/api/posts/${id}/save/`)
           .then((response) => {
             if (response.data.message == 'post saved') {
-              this.post.saves_count += 1
+              this.post.saves_count += 1;
             } else {
-              this.post.saves_count -= 1
-              this.$emit('refreshSavedFeed')
+              this.post.saves_count -= 1;
+              this.$emit('refreshSavedFeed');
             }
           })
           .catch((error) => {
-            console.error('save POST error ', error)
-          })
+            console.error('save POST error ', error);
+          });
       },
       toggleEdit() {
-        this.isEditing = !this.isEditing
-        this.showDropdown = false
+        this.isEditing = !this.isEditing;
+        this.showDropdown = false;
       },
       saveDetail() {
         axios
@@ -310,22 +310,22 @@
             body: this.post.body,
           })
           .then(() => {
-            this.isEditing = false
+            this.isEditing = false;
           })
           .catch((error) => {
-            console.error('save detail post error ', error)
-            this.isEditing = false
-          })
+            console.error('save detail post error ', error);
+            this.isEditing = false;
+          });
       },
       deletePost() {
         axios
           .delete(`/api/posts/${this.post.id}/delete/`)
           .then(() => {
-            this.$router.push('/feed')
+            this.$router.push('/feed');
           })
           .catch((error) => {
-            console.error('delete post error ', error)
-          })
+            console.error('delete post error ', error);
+          });
       },
       reportPost(body) {
         axios
@@ -334,12 +334,12 @@
             type_of_report: 'other',
           })
           .then(() => {
-            this.showModal = false
+            this.showModal = false;
           })
           .catch((error) => {
-            console.error('report post error ', error)
-          })
+            console.error('report post error ', error);
+          });
       },
     },
-  }
+  };
 </script>
