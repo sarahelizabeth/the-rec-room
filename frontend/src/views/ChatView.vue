@@ -42,8 +42,8 @@
     <!-- Main Chat view -->
     <div class="column has-text-centered">
       <div class="container">
-        <img src="/assets/message-icon.png" style="transform: rotate(-10deg)" />
-        <!-- <img src="/assets/chat-icon.png" /> -->
+        <!-- <img src="/assets/message-icon.png" style="transform: rotate(-10deg)" /> -->
+        <img src="/assets/chat-icon.png" />
         <p class="title">Messages</p>
         <div v-if="this.chats.length">
           <p>Select a name from the panel on the left to view your chats.</p>

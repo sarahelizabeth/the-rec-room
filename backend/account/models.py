@@ -67,7 +67,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     def get_avatar(self):
         if self.avatar:
             # NOTES: this is where the issue seems to be arising
+            print(settings.WEBSITE_URL)
             return settings.WEBSITE_URL + self.avatar.url
+            # print(self.avatar.url)
             # return self.avatar.url
         else:
             return 'https://bulma.io/images/placeholders/128x128.png'

@@ -38,7 +38,7 @@ DEBUG = os.getenv('DEBUG', 'False') == 'True'
 ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', '127.0.0.1,localhost').split(",")
 # ALLOWED_HOSTS=['localhost', '127.0.0.1']
 
-# NOTES: when this is not set to the static string, it breaks
+# NOTES: when this is not set to the static string, it breaks locally
 WEBSITE_URL = os.getenv('DJANGO_WEBSITE_URL', 'http://127.0.0.1:8000')
 # WEBSITE_URL = 'http://127.0.0.1:8000'
 
