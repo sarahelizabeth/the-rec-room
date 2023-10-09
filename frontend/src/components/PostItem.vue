@@ -35,7 +35,7 @@
         </div>
 
         <!-- Rec detail -->
-        <div v-if="showDetail">
+        <div v-if="showDetail || showDescription">
           <span v-if="!isEditing">{{ post.body }}</span>
           <div v-else class="control">
             <div class="field">
@@ -60,7 +60,7 @@
       </div>
 
       <!-- Bottom elements -->
-      <nav class="level">
+      <nav class="level is-mobile">
         <div class="level-left">
           <div class="level-item" @click="likePost(post.id)">
             <a :class="{ 'has-text-danger': isLiked, 'has-text-grey': !isLiked }" class="icon is-small"
@@ -88,7 +88,7 @@
             <span class="pl-2">watched</span>
           </div> -->
         </div>
-        <div class="level-right">
+        <div class="level-right is-hidden-mobile">
           <div class="level-item">
             <span class="has-text-grey is-size-7">{{ post.created_at }}</span>
           </div>
@@ -183,6 +183,7 @@
       post: Object,
       user: Object,
       showDetail: Boolean,
+      showDescription: Boolean,
     },
     components: {
       RouterLink,

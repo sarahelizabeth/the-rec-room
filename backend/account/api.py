@@ -100,7 +100,7 @@ def edit_password(request):
 
 @api_view(['GET'])
 def get_users(request):
-    users = User.objects.exclude(id=request.user.id).exclude(id='e39db257-5ad2-429c-9726-de724fdfe3d4')
+    users = User.objects.exclude(id=request.user.id).exclude(id='e39db257-5ad2-429c-9726-de724fdfe3d4').exclude(email='sarah@admin.com')
     serializer = UserSerializer(users, many=True)
 
     return JsonResponse(serializer.data, safe=False)

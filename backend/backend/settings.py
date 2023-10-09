@@ -31,12 +31,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', get_random_secret_key())
 # SECRET_KEY = 'django-insecure-ufv^b1+3+rt*#r3ej@s5*ad=e5r#nf%rnchnon#c0liy6nzx(8'
 
-DEBUG = os.getenv('DEBUG', False) == True
+# NOTES: WHEN THIS IS IN USE, IMAGES DON'T WORK
+DEBUG = os.getenv('DEBUG', 'False') == 'True'
 # DEBUG = True
 
 ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', '127.0.0.1,localhost').split(",")
 # ALLOWED_HOSTS=['localhost', '127.0.0.1']
 
+# NOTES: when this is not set to the static string, it breaks
 WEBSITE_URL = os.getenv('DJANGO_WEBSITE_URL', 'http://127.0.0.1:8000')
 # WEBSITE_URL = 'http://127.0.0.1:8000'
 
