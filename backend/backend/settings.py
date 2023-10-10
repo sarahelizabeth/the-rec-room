@@ -207,7 +207,7 @@ if USE_SPACES:
     AWS_MEDIA_LOCATION = 'media'
     PUBLIC_MEDIA_LOCATION = 'media'
     MEDIA_URL = f'https://{AWS_S3_ENDPOINT_URL}/{AWS_MEDIA_LOCATION}/'
-    DEFAULT_FILE_STORAGE = 'backend.storage_backend.MediaStorage'
+    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 else:
     STATIC_URL = '/static/'
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
