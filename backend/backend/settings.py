@@ -194,8 +194,8 @@ if USE_SPACES:
     # AWS_ACCESS_KEY_ID = 'DO00DAL3UK9MFXVY8Q37'
     AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
     # AWS_SECRET_ACCESS_KEY = 'rMelz75sMbtVcfyH0DRJXAPWcIdTMNi5u1p9DWr3jQk'
-    # AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
-    AWS_STORAGE_BUCKET_NAME = 'rec-room-media'
+    AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
+    # AWS_STORAGE_BUCKET_NAME = 'rec-room-media'
     AWS_DEFAULT_ACL = 'public-read'
     AWS_S3_ENDPOINT_URL = 'https://nyc3.digitaloceanspaces.com'
     AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
