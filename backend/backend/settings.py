@@ -195,6 +195,7 @@ if USE_SPACES:
     AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
     # AWS_SECRET_ACCESS_KEY = 'rMelz75sMbtVcfyH0DRJXAPWcIdTMNi5u1p9DWr3jQk'
     AWS_STORAGE_BUCKET_NAME = str(os.getenv('AWS_STORAGE_BUCKET_NAME'))
+    print(AWS_STORAGE_BUCKET_NAME)
     # AWS_STORAGE_BUCKET_NAME = 'rec-room-media'
     AWS_DEFAULT_ACL = 'public-read'
     AWS_S3_ENDPOINT_URL = 'https://nyc3.digitaloceanspaces.com'
@@ -214,10 +215,10 @@ else:
     MEDIA_URL = '/media/'
     MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-    os.path.join(BASE_DIR, 'media/static'),
-]
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'static'),
+#     os.path.join(BASE_DIR, 'media/static'),
+# ]
 MEDIAFILES_DIRS = [
     os.path.join(BASE_DIR, 'media')
 ]
