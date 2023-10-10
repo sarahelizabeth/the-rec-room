@@ -8,7 +8,7 @@ class StaticStorage(S3Boto3Storage):
 
 
 class MediaStorage(S3Boto3Storage):
-  # location = 'media'
-  bucket_name = 'rec-room-media'
+  location = 'mediafiles'
+  # bucket_name = 'rec-room-media'
   default_acl = 'public-read'
   file_overwrite = False
