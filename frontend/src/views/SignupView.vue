@@ -99,7 +99,7 @@
 
           <div class="field is-grouped is-grouped-centered">
             <div class="control">
-              <button class="button is-link">Submit</button>
+              <button class="button is-link" :class="{ 'is-loading': showLoading }">Submit</button>
             </div>
           </div>
         </form>
@@ -109,7 +109,7 @@
 </template>
 
 <script>
-  import axios from 'axios'
+  import axios from 'axios';
 
   export default {
     data() {
@@ -125,69 +125,75 @@
         passwordInputType: 'password',
         errors: [],
         messages: [],
-      }
+        showLoading: false,
+      };
     },
     methods: {
       toggleShowPassword() {
         if (this.showPassword == false) {
-          this.showPassword = true
-          this.passwordInputType = 'text'
+          this.showPassword = true;
+          this.passwordInputType = 'text';
         } else {
-          this.showPassword = false
-          this.passwordInputType = 'password'
+          this.showPassword = false;
+          this.passwordInputType = 'password';
         }
       },
       submitForm() {
-        this.errors = []
-        this.messages = []
+        this.errors = [];
+        this.messages = [];
 
         if (this.form.name === '') {
-          this.errors.push('Your name is missing')
+          this.errors.push('Your name is missing');
         }
 
         if (this.form.email === '') {
-          this.errors.push('Your email is missing')
+          this.errors.push('Your email is missing');
         }
 
         if (this.form.username === '') {
-          this.errors.push('Your username is missing')
+          this.errors.push('Your username is missing');
         }
 
         if (this.form.password1 === '') {
-          this.errors.push('Your password is missing')
+          this.errors.push('Your password is missing');
         }
 
         if (this.form.password1 !== this.form.password2) {
-          this.errors.push('Passwords do not match')
+          this.errors.push('Passwords do not match');
         }
 
         if (this.errors.length === 0) {
+          this.showLoading = true;
+
           axios
             .post('/api/signup/', this.form)
             .then((response) => {
+              this.showLoading = false;
               if (response.data.message === 'success') {
+                // could get rid of submit button altogether
                 this.messages.push(
                   'User registered successfully! Please activate your account by following the link that was sent to your email.'
-                )
+                );
 
-                this.form.email = ''
-                this.form.name = ''
-                this.form.username = ''
-                this.form.password1 = ''
-                this.form.password2 = ''
+                this.form.email = '';
+                this.form.name = '';
+                this.form.username = '';
+                this.form.password1 = '';
+                this.form.password2 = '';
               } else {
-                const data = JSON.parse(response.data.message)
+                const data = JSON.parse(response.data.message);
 
                 for (const key in data) {
-                  this.errors.push(data[key][0].message)
+                  this.errors.push(data[key][0].message);
                 }
               }
             })
             .catch((error) => {
-              console.error('signup error ', error)
-            })
+              console.error('signup error ', error);
+              this.showLoading = false;
+            });
         }
       },
     },
-  }
+  };
 </script>

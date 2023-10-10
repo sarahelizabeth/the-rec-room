@@ -32,18 +32,19 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', get_random_secret_key())
 # SECRET_KEY = 'django-insecure-ufv^b1+3+rt*#r3ej@s5*ad=e5r#nf%rnchnon#c0liy6nzx(8'
 
 # NOTES: WHEN THIS IS IN USE, IMAGES DON'T WORK
-DEBUG = os.getenv('DEBUG', 'False') == 'True'
-# DEBUG = True
+# DEBUG = os.getenv('DEBUG', 'False') == 'True'
+DEBUG = True
 
 ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', '127.0.0.1,localhost').split(",")
 # ALLOWED_HOSTS=['localhost', '127.0.0.1']
 
-# NOTES: when this is not set to the static string, it breaks locally
 WEBSITE_URL = os.getenv('DJANGO_WEBSITE_URL', 'http://127.0.0.1:8000')
 # WEBSITE_URL = 'http://127.0.0.1:8000'
 
 DEVELOPMENT_MODE = os.getenv('DEVELOPMENT_MODE', 'False') == 'True'
 # DEVELOPMENT_MODE = True
+
+USE_SPACES = os.getenv('USE_SPACES', 'True') == 'True'
 
 AUTH_USER_MODEL = 'account.User'
 
@@ -92,6 +93,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'storages',
     'account',
     'post',
     'search',
@@ -183,16 +185,79 @@ USE_I18N = True
 USE_TZ = True
 
 
+# DigitalOcean Spaces configuration (static + media files)
+# https://blog.devgenius.io/django-digitalocean-spaces-a12b4a053628
+
+if USE_SPACES:
+    # settings
+    AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
+    # AWS_ACCESS_KEY_ID = 'DO00DAL3UK9MFXVY8Q37'
+    AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
+    # AWS_SECRET_ACCESS_KEY = 'rMelz75sMbtVcfyH0DRJXAPWcIdTMNi5u1p9DWr3jQk'
+    AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
+    # AWS_STORAGE_BUCKET_NAME = 'rec-room-media'
+    AWS_DEFAULT_ACL = 'public-read'
+    AWS_S3_ENDPOINT_URL = 'https://nyc3.digitaloceanspaces.com'
+    AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
+    # static settings
+    AWS_LOCATION = 'static'
+    STATIC_URL = f'https://{AWS_S3_ENDPOINT_URL}/{AWS_LOCATION}/'
+    STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+    # media settings
+    AWS_MEDIA_LOCATION = 'media'
+    PUBLIC_MEDIA_LOCATION = 'media'
+    MEDIA_URL = f'https://{AWS_S3_ENDPOINT_URL}/{AWS_MEDIA_LOCATION}/'
+    DEFAULT_FILE_STORAGE = 'backend.storage_backend.MediaStorage'
+else:
+    STATIC_URL = '/static/'
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'static'),
+#     os.path.join(BASE_DIR, 'media/static'),
+# ]
+# MEDIAFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'media')
+# ]
+
+# AWS_ACCESS_KEY_ID = 'key_id'
+# AWS_SECRET_ACCESS_KEY = 'access_key'
+# AWS_STORAGE_BUCKET_NAME = 'bucket_name'
+# AWS_DEFAULT_ACL = 'public-read' 
+# AWS_S3_ENDPOINT_URL = 'https://nyc3.digitaloceanspaces.com' # Make sure nyc3 is correct
+# AWS_S3_OBJECT_PARAMETERS = {
+#     'CacheControl': 'max-age=86400'
+# }
+
+# AWS_STATIC_LOCATION = 'static'
+# STATIC_URL = '%s/%s' % (AWS_S3_ENDPOINT_URL, AWS_STATIC_LOCATION)
+# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+# AWS_MEDIA_LOCATION = 'media'
+# PUBLIC_MEDIA_LOCATION = 'media'
+# MEDIA_URL = '%s%s' % (AWS_S3_ENDPOINT_URL, AWS_MEDIA_LOCATION)
+# DEFAULT_FILE_STORAGE = 'backend.storage_backend.MediaStorage'
+# DEFAULT_FILE_STORAGE = 'storage_backend.MediaStorage'
+
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-# STATIC_URL = 'static/'
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# STATIC_URL = '/static/'
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# if this isn't working, try this instead:
-STATIC_URL = "/static/"
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'static'),
+#     os.path.join(BASE_DIR, 'media/static'),
+# ]
+# MEDIAFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'media')
+# ]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

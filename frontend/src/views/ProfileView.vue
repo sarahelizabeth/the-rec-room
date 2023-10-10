@@ -10,7 +10,7 @@
               <!-- Avatar, name, and username -->
               <div class="card-content has-text-centered">
                 <figure class="rounded-img-container-md is-inline-block">
-                  <img class="rounded-img" :src="userStore.user.avatar" />
+                  <img class="rounded-img" :src="user.get_avatar" />
                 </figure>
                 <p class="title has-text-grey-dark">{{ user.name }}</p>
                 <p class="subtitle is-5 has-text-grey">@{{ user.username }}</p>
