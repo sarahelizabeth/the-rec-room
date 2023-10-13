@@ -93,7 +93,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'storages',
+    
     'account',
     'post',
     'search',
@@ -102,6 +102,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'corsheaders',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -189,27 +190,40 @@ USE_TZ = True
 # https://blog.devgenius.io/django-digitalocean-spaces-a12b4a053628
 
 if USE_SPACES:
-    # settings
+    # rec-room-media bucket settings
     AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
     AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
+    AWS_DEFAULT_ACL = 'public-read'
+    AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
+
+    # Note: not sure which of the following 3 lines is correct
     # AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
     # AWS_STORAGE_BUCKET_NAME = 'mediabucket'
     AWS_STORAGE_BUCKET_NAME = 'rec-room-media'
-    AWS_DEFAULT_ACL = 'public-read'
-    AWS_S3_ENDPOINT_URL = 'https://rec-room-media.nyc3.digitaloceanspaces.com'
-    AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
+
+    # Note: not sure which of the following 2 lines is correct
+    # AWS_S3_ENDPOINT_URL = 'https://rec-room-media.nyc3.digitaloceanspaces.com'
+    AWS_S3_ENDPOINT_URL = 'https://nyc3.digitaloceanspaces.com'
+    
     # static settings
     AWS_LOCATION = 'static'
-    # Trying this instead of STATICFILES_DIRS
-    # STATIC_ROOT = os.path.join(BASE_DIR, 'static')
     STATIC_URL = f'https://{AWS_S3_ENDPOINT_URL}/{AWS_LOCATION}/'
-    # DEPRECATED:
-    STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+    # Note: not sure which of the following 2 variables is correct
+    # STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+    STATICFILES_DIRS = (
+        os.path.join(BASE_DIR, 'static'),
+    )
+
     # media settings
     AWS_MEDIA_LOCATION = 'media'
     PUBLIC_MEDIA_LOCATION = 'media'
     MEDIA_URL = f'https://{AWS_S3_ENDPOINT_URL}/{AWS_MEDIA_LOCATION}/'
-    # DEPRECATED:
+
+    # Note: lines 224 and 225 seem to be deprecated according to 
+    # https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html, 
+    # so I tried the "STORAGES" variable as well
+    STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
     DEFAULT_FILE_STORAGE = 'backend.storage_backend.MediaStorage'
     # STORAGES = {
     #     'staticfiles': {
@@ -225,54 +239,8 @@ else:
     MEDIA_URL = '/media/'
     MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-STATICFILES_DIRS = (
-    # os.path.join(BASE_DIR, 'static'),
-    os.path.join(BASE_DIR, 'rec-room-media/static'),
-)
-# MEDIAFILES_DIRS = (
-#     os.path.join(BASE_DIR, 'media')
-# )
 
-###########
-# STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, 'static'),
-#     os.path.join(BASE_DIR, 'media/static'),
-# ]
-# MEDIAFILES_DIRS = [
-#     os.path.join(BASE_DIR, 'media')
-# ]
-##########
-
-# AWS_ACCESS_KEY_ID = 'key_id'
-# AWS_SECRET_ACCESS_KEY = 'access_key'
-# AWS_STORAGE_BUCKET_NAME = 'bucket_name'
-# AWS_DEFAULT_ACL = 'public-read' 
-# AWS_S3_ENDPOINT_URL = 'https://nyc3.digitaloceanspaces.com' # Make sure nyc3 is correct
-# AWS_S3_OBJECT_PARAMETERS = {
-#     'CacheControl': 'max-age=86400'
-# }
-
-# AWS_STATIC_LOCATION = 'static'
-# STATIC_URL = '%s/%s' % (AWS_S3_ENDPOINT_URL, AWS_STATIC_LOCATION)
-# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-
-# AWS_MEDIA_LOCATION = 'media'
-# PUBLIC_MEDIA_LOCATION = 'media'
-# MEDIA_URL = '%s%s' % (AWS_S3_ENDPOINT_URL, AWS_MEDIA_LOCATION)
-# DEFAULT_FILE_STORAGE = 'backend.storage_backend.MediaStorage'
-# DEFAULT_FILE_STORAGE = 'storage_backend.MediaStorage'
-
-
-##########
-
-    # AWS_ACCESS_KEY_ID = 'DO00DAL3UK9MFXVY8Q37'
-    # AWS_SECRET_ACCESS_KEY = 'rMelz75sMbtVcfyH0DRJXAPWcIdTMNi5u1p9DWr3jQk'
-    # AWS_STORAGE_BUCKET_NAME = 'mediabucket'
-    # DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-
-##########
-
-# Static files (CSS, JavaScript, Images)
+# Static files (CSS, JavaScript, Images) ==> THIS IS OLD
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 # STATIC_URL = '/static/'
