@@ -193,7 +193,8 @@ if USE_SPACES:
     AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
     AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
     # AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
-    AWS_STORAGE_BUCKET_NAME = 'mediabucket'
+    # AWS_STORAGE_BUCKET_NAME = 'mediabucket'
+    AWS_STORAGE_BUCKET_NAME = 'rec-room-media'
     AWS_DEFAULT_ACL = 'public-read'
     AWS_S3_ENDPOINT_URL = 'https://rec-room-media.nyc3.digitaloceanspaces.com'
     AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
@@ -222,13 +223,22 @@ else:
     MEDIA_URL = '/media/'
     MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+MEDIAFILES_DIRS = (
+    os.path.join(BASE_DIR, 'media')
+)
+
+###########
 # STATICFILES_DIRS = [
 #     os.path.join(BASE_DIR, 'static'),
 #     os.path.join(BASE_DIR, 'media/static'),
 # ]
-MEDIAFILES_DIRS = [
-    os.path.join(BASE_DIR, 'media')
-]
+# MEDIAFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'media')
+# ]
+##########
 
 # AWS_ACCESS_KEY_ID = 'key_id'
 # AWS_SECRET_ACCESS_KEY = 'access_key'
