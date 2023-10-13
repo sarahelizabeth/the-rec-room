@@ -200,6 +200,8 @@ if USE_SPACES:
     AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
     # static settings
     AWS_LOCATION = 'static'
+    # Trying this instead of STATICFILES_DIRS
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
     STATIC_URL = f'https://{AWS_S3_ENDPOINT_URL}/{AWS_LOCATION}/'
     # DEPRECATED:
     STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
@@ -223,13 +225,13 @@ else:
     MEDIA_URL = '/media/'
     MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-    os.path.join(BASE_DIR, 'workspace/backend/static'),
-)
-MEDIAFILES_DIRS = (
-    os.path.join(BASE_DIR, 'media')
-)
+# STATICFILES_DIRS = (
+#     os.path.join(BASE_DIR, 'static'),
+#     os.path.join(BASE_DIR, 'workspace/backend/static'),
+# )
+# MEDIAFILES_DIRS = (
+#     os.path.join(BASE_DIR, 'media')
+# )
 
 ###########
 # STATICFILES_DIRS = [
