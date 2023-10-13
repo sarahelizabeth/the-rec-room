@@ -193,15 +193,15 @@ if USE_SPACES:
     AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
     AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
     # AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
-    AWS_STORAGE_BUCKET_NAME = 'mediabucket'
-    # AWS_STORAGE_BUCKET_NAME = 'rec-room-media'
+    # AWS_STORAGE_BUCKET_NAME = 'mediabucket'
+    AWS_STORAGE_BUCKET_NAME = 'rec-room-media'
     AWS_DEFAULT_ACL = 'public-read'
     AWS_S3_ENDPOINT_URL = 'https://rec-room-media.nyc3.digitaloceanspaces.com'
     AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
     # static settings
     AWS_LOCATION = 'static'
     # Trying this instead of STATICFILES_DIRS
-    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+    # STATIC_ROOT = os.path.join(BASE_DIR, 'static')
     STATIC_URL = f'https://{AWS_S3_ENDPOINT_URL}/{AWS_LOCATION}/'
     # DEPRECATED:
     STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
@@ -225,10 +225,10 @@ else:
     MEDIA_URL = '/media/'
     MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# STATICFILES_DIRS = (
-#     os.path.join(BASE_DIR, 'static'),
-#     os.path.join(BASE_DIR, 'workspace/backend/static'),
-# )
+STATICFILES_DIRS = (
+    # os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'rec-room-media/static'),
+)
 # MEDIAFILES_DIRS = (
 #     os.path.join(BASE_DIR, 'media')
 # )
