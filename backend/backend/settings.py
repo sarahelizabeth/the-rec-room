@@ -223,16 +223,16 @@ if USE_SPACES:
     # Note: lines 224 and 225 seem to be deprecated according to 
     # https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html, 
     # so I tried the "STORAGES" variable as well
-    STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-    DEFAULT_FILE_STORAGE = 'backend.storage_backend.MediaStorage'
-    # STORAGES = {
-    #     'staticfiles': {
-    #         'BACKEND': 'storages.backends.s3boto3.S3Boto3Storage',
-    #     },
-    #     'default': {
-    #         'BACKEND': 'backend.storage_backend.MediaStorage',
-    #     },
-    # }
+    # STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+    # DEFAULT_FILE_STORAGE = 'backend.storage_backend.MediaStorage'
+    STORAGES = {
+        'staticfiles': {
+            'BACKEND': 'storages.backends.s3boto3.S3Boto3Storage',
+        },
+        'default': {
+            'BACKEND': 'backend.storage_backend.MediaStorage',
+        },
+    }
 else:
     STATIC_URL = '/static/'
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
